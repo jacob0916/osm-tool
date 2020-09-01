@@ -30,16 +30,17 @@ function main() {
         let pk1 = bufferToHexString(pkb1);
         console.log(prv, pk,pk1);
 
-        let keystore = web3.eth.accounts.encrypt(prv,config.password);
-        keystore.waddress = wanutil.generateWaddrFromPriv(prvb,prvb).slice(2);
-        keystore.crypto2 = keystore.crypto;
-        fs.writeFileSync(path.join(config.ksDir,'0x'+keystore.address), JSON.stringify(keystore));
+        // let keystore = web3.eth.accounts.encrypt(prv,config.password);
+        // keystore.waddress = wanutil.generateWaddrFromPriv(prvb,prvb).slice(2);
+        // keystore.crypto2 = keystore.crypto;
+        // fs.writeFileSync(path.join(config.ksDir,'0x'+keystore.address), JSON.stringify(keystore));
         // nodekey enodeId
         let oneLine = removePrefix(prv) + "\t"+ pk + "\n";
         fileContent += oneLine;
     }
 
     fs.writeFileSync(config.nodeKeyList,fileContent);
+    console.log("===============done=================\n");
 }
 
 

@@ -8,7 +8,15 @@ const ecurve = require('ecurve');
 const ecparams = ecurve.getCurveByName('secp256k1');
 const wanutil = require('wanchain-util');
 
-let argv = optimist.argv;
+let argv = optimist
+    .usage("Usage: $0  --nc [index] --wallet [true]")
+    .alias('h', 'help')
+    .describe('nc', 'Number count')
+    .describe('wallet', 'Wallet address or working address')
+    .default('nc', 1)
+    .default('wallet', false)
+    .boolean('wallet')
+    .argv;
 
 const Web3 = require('web3');
 const net = require('net');
@@ -16,7 +24,10 @@ let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 const ethUtil = require("ethereumjs-util");
 
 function main() {
+    // --nc 20 --wallet true
     let nc = argv["nc"];
+    let wallet = argv["wallet"];
+    console.log(wallet);
     let fileContent='';
     for (let i = 0; i < nc; i++) {
         let ret = web3.eth.accounts.create();
@@ -34,12 +45,18 @@ function main() {
         keystore.waddress = wanutil.generateWaddrFromPriv(prvb,prvb).slice(2);
         keystore.crypto2 = keystore.crypto;
         fs.writeFileSync(path.join(config.ksDir,'0x'+keystore.address), JSON.stringify(keystore));
-        // nodekey enodeId
-        let oneLine = removePrefix(prv) + "\t"+ pk + "\n";
+        // wallet address pk
+        let oneLine = ret.address + "\t"+ pk + "\n";
         fileContent += oneLine;
     }
 
-    fs.writeFileSync(config.nodeKeyList,fileContent);
+    if(!!wallet){
+        fs.writeFileSync(config.WalletAddList,fileContent);
+    }else{
+        fs.writeFileSync(config.WorkingAddList,fileContent);
+    }
+
+    console.log("===============done=================\n");
 }
 
 
