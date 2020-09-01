@@ -1,0 +1,15 @@
+/*
+
+grpId
+
+wkPk
+
+enodeId
+
+stakeInValue
+
+
+smStartIndex
+smCount
+
+ */
