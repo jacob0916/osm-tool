@@ -2,7 +2,7 @@ const optimist = require('optimist');
 const config = require('../cfg/config');
 const BigInteger = require('bigi');
 const fs = require('fs');
-const path=require('path');
+const path = require('path');
 
 const ecurve = require('ecurve');
 const ecparams = ecurve.getCurveByName('secp256k1');
@@ -24,11 +24,11 @@ let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 const ethUtil = require("ethereumjs-util");
 
 function main() {
-    // --nc 20 --wallet true
+    // --nc 20 --wallet
     let nc = argv["nc"];
     let wallet = argv["wallet"];
     console.log(wallet);
-    let fileContent='';
+    let fileContent = '';
     for (let i = 0; i < nc; i++) {
         let ret = web3.eth.accounts.create();
         let prv = ret.privateKey;
@@ -39,21 +39,24 @@ function main() {
 
         let pk = bufferToHexString(pkb);
         let pk1 = bufferToHexString(pkb1);
-        console.log(prv, pk,pk1);
+        console.log(prv, pk, pk1);
 
-        let keystore = web3.eth.accounts.encrypt(prv,config.password);
-        keystore.waddress = wanutil.generateWaddrFromPriv(prvb,prvb).slice(2);
+        let keystore = web3.eth.accounts.encrypt(prv, config.password);
+        keystore.waddress = wanutil.generateWaddrFromPriv(prvb, prvb).slice(2);
         keystore.crypto2 = keystore.crypto;
-        fs.writeFileSync(path.join(config.ksDir,'0x'+keystore.address), JSON.stringify(keystore));
+        fs.writeFileSync(path.join(config.ksDir, '0x' + keystore.address.toLowerCase()), JSON.stringify(keystore));
         // wallet address pk
-        let oneLine = ret.address + "\t"+ pk + "\n";
+        let oneLine = ret.address.toLowerCase() + "\t" + pk.toLowerCase();
+        if (i != parseInt(nc - 1)) {
+            oneLine += "\n";
+        }
         fileContent += oneLine;
     }
 
-    if(!!wallet){
-        fs.writeFileSync(config.WalletAddList,fileContent);
-    }else{
-        fs.writeFileSync(config.WorkingAddList,fileContent);
+    if (!!wallet) {
+        fs.writeFileSync(config.WalletAddList, fileContent);
+    } else {
+        fs.writeFileSync(config.WorkingAddList, fileContent);
     }
 
     console.log("===============done=================\n");
