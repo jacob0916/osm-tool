@@ -32,6 +32,13 @@ wlWalletAddr            []
 gasPrice
 gas
  */
+const config = require('../cfg/config');
+const Web3 = require('web3');
+const net = require('net');
+let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
+const fs = require('fs');
+const readline = require('readline');
+
 const optimist = require('optimist');
 let argv = optimist
     .alias('h', 'help')
@@ -48,6 +55,7 @@ let argv = optimist
     .describe('dcrv', 'dstCurve')
     .describe('ms', 'minStakeIn uint:wei')
     .describe('md', 'minDelegateIn')
+    .describe('mp', 'minPartIn')
     .describe('df', 'delegateFee')
     .describe('wlStart', 'White start index')
     .describe('wlCount', 'White count')
@@ -61,6 +69,7 @@ let argv = optimist
     .default('wlCount', 5)
     .default('ms', 2000)
     .default('md', 100)
+    .default('mp', 50)
     .default('df', 100)
     .argv;
 
@@ -78,7 +87,7 @@ function getGrpIdByString(str) {
     return stringTobytes32(str);
 }
 
-function main() {
+async function main() {
     // only admin can open group.
     let smIn = {
         regDur: argv.rd,
@@ -94,6 +103,7 @@ function main() {
         dstCurve: argv.dcrv,
         minStakeIn: argv.ms,
         minDelegateIn: argv.md,
+        minPartIn:argv.mp,
         delegateFee: argv.df,
         workTime: '',
         totalTime: ''
@@ -101,6 +111,72 @@ function main() {
     let wlStartIndex = argv.wlStart;
     let wlCount = argv.wlCount;
     console.log(smIn);
+
+    // waddr, wkaddr, wkpk, enodeId
+    let linesRelation = await processLineByLine(config.RelationList);
+    let wlWallectAddr = [];
+    let wlWkAddr = [];
+    for (let i = wlStartIndex; i < wlStartIndex + wlCount; i++) {
+        console.log(linesRelation[i]);
+        wlWallectAddr.push(split(linesRelation[i])[0]);
+        wlWkAddr.push(split(linesRelation[i])[1]);
+    }
+    updateSmIn(smIn);
+    console.log("smIn",smIn);
+    await doOpenGrp(smIn, wlWkAddr, wlWallectAddr);
+    console.log("========================done=========================");
+}
+
+
+function updateSmIn(smIn) {
+    // build workTime and totalTime
+    smIn.workTime = parseInt(Date.now() / 1000) + smIn.regDur + smIn.gpkDur;
+    smIn.totalTime = smIn.htlcDur;
+    smIn.grpId = getGrpIdByString(smIn.grpId);
+    smIn.preGrpId = getGrpIdByString(smIn.preGrpId);
+}
+
+async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr);
+            console.log("data of doOpenGrp",data);
+            let txHash = '';
+            txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+            console.log("doOpenGrp txHash",txHash);
+            resolve(txHash);
+        } catch (err) {
+            console.log("doOpenGrp error",err.message);
+            reject(err);
+        }
+    });
+
+}
+
+async function processLineByLine(fileName) {
+    return new Promise((resolve, reject) => {
+
+        try {
+            let lines = [];
+            const rl = readline.createInterface({
+                input: fs.createReadStream(fileName),
+                crlfDelay: Infinity
+            });
+
+            rl.on('line', (line) => {
+                lines.push(line)
+            });
+            rl.on('close', () => {
+                resolve(lines);
+            });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+function split(line, sep = '\t') {
+    return line.split(sep);
 }
 
 main();

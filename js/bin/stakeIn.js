@@ -1,17 +1,13 @@
 /*
-
+=================
+parameters.
+=================
 grpId
-
 wkPk
-
 enodeId
-
 stakeInValue
-
-
 smStartIndex
 smCount
-
  */
 let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx} = require('./util/wanchain');
 const config = require('../cfg/config');

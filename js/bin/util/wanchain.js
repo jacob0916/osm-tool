@@ -94,33 +94,15 @@ async function getNonceByWeb3(addr, includePendingOrNot = true) {
     })
 };
 
-// let smIn={
-//     regDur:'',
-//     gpkDur:'',
-//     htlcDur:'',
-//     totalNodes:'',
-//     thresholds:'',
-//     grpId:'',
-//     preGrpId:'',
-//     srcChainId:'',
-//     dstChainId:'',
-//     srcCurve:'',
-//     dstCurve:'',
-//     minStakeIn:'',
-//     minDelegateIn:'',
-//     delegateFee:'',
-//     workTime:'',
-//     totalTime:''
-// };
-// wlWkAddr= [];
-// wlWalletAddr=[];
 
 function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
+    console.log("wlWkAddr",wlWkAddr);
+    console.log("wlWalletAddr",wlWalletAddr);
     let c = getContract(config.smgAbi, config.smgScAddr);
     return c.methods.storemanGroupRegisterStart(
         [smIn.grpId, smIn.preGrpId, smIn.workTime, smIn.totalTime, smIn.regDur, smIn.totalNodes, smIn.thresholds,
             smIn.srcChainId, smIn.dstChainId, smIn.srcCurve, smIn.dstCurve, smIn.minStakeIn, smIn.minDelegateIn,
-            smIn.delegateFee],
+            smIn.minPartIn,smIn.delegateFee],
         wlWkAddr,
         wlWalletAddr).encodeABI();
 }
