@@ -26,32 +26,21 @@ async function alloc(addr, amount) {
 async function main() {
     let addr = null;
     // loop the wallet address, working address
-    await build();
+    await doAlloc();
 }
 
 
-async function build() {
+async function doAlloc() {
     // waddr, wkaddr, wkpk, enodeId
     let ret = [];
-    let linesWKAddr = await processLineByLine(config.WorkingAddList);
-    let linesWAddr = await processLineByLine(config.WalletAddList);
-    let linesEnode = await processLineByLine(config.nodeKeyList);
+    let linesRelation = await processLineByLine(config.RelationList);
 
-    console.log(linesWKAddr, linesWAddr, linesEnode);
-
-    for (let i = 0; i < linesWKAddr.length; i++) {
-        let elem = [];
-        elem.push(split(linesWAddr[i])[0]);     // wallet address
-        elem.push(split(linesWKAddr[i])[0]);    // working address
-        elem.push(split(linesWKAddr[i])[1]);    // working pk
-        elem.push(split(linesEnode[i])[1]);     // enodeId
-
-        ret.push(elem);
-
-        await alloc(elem[0], config.allocValue);
-        await alloc(elem[1], config.allocWKValue);
+    for (let i = 0; i < linesRelation.length; i++) {
+        await alloc(split(linesRelation[i])[0], config.allocValue);
+        await alloc(split(linesRelation[i])[1], config.allocWKValue);
     }
-    console.log(ret);
+
+    console.log("========================done=========================");
 }
 
 async function processLineByLine(fileName) {

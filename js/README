@@ -1,0 +1,24 @@
+step1:
+    desc: build nodekey and enodeId
+    cmd: node crEnodeId.js --nc 60
+
+
+step2:
+    desc: build working addr and keystore
+    cmd:   node crWalletAddr.js --nc 60
+
+step3:
+    desc: build wallet addr and keystore
+    cmd:   node crWalletAddr.js --nc 60 --wallet
+
+step4:
+        # wallet address  and keystore file name
+        # working address and keystore file name
+        # working pk
+        # enodeId
+    desc: build relation of storeman info.
+    cmd:   node buildRelation.js
+
+step5:
+     desc: alloc wan to storeman working address and wallet address.
+     cmd:
