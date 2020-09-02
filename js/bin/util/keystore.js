@@ -4,6 +4,11 @@ const path = require('path');
 
 const keyStore = {
 
+    getFromFile(fileName){
+        let keystoreStr = fs.readFileSync(fileName, "utf8");
+        return JSON.parse(keystoreStr);
+    },
+
     getPrivateKeyByKsPath(address,password,keyStorePath){
 
         let filePath;

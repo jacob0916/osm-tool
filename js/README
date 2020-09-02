@@ -30,4 +30,4 @@ step6:
 
 step7:
      desc: stake in
-     cmd:  node stakeIn.js --smsi 0 --smcnt 21 --amount 3000
+     cmd:  node stakeIn.js --gid 'test-1' --smsi 0 --smcnt 21 --amount 3000

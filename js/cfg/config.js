@@ -15,6 +15,8 @@ exports.password = "wanglu";
 exports.allocValue = 2;
 exports.allocWKValue = 1;
 
+exports.gasPrice = 180000000000;
+exports.gasLimit = 10000000;
 
 exports.smgScAddr = '0x23CE9A384D9191B8fe231D1176021e320e4d52c8';
 

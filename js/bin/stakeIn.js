@@ -15,7 +15,12 @@ smCount
  */
 let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx} = require('./util/wanchain');
 const config = require('../cfg/config');
-const web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
+const Web3 = require('web3');
+const net = require('net');
+let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
+const fs = require('fs');
+const readline = require('readline');
+
 
 const optimist = require('optimist');
 let argv = optimist
@@ -69,8 +74,8 @@ async function doStake(walletAddr, smgAddr, msgValue, grpId, wkPk, enodeId) {
 
 function stringTobytes32(name) {
     let b = Buffer.alloc(32)
-    b.write(name, 32 - name.length, 'utf8')
-    let id = '0x' + b.toString('hex')
+    b.write(name, 32 - name.length, 'utf8');
+    let id = '0x' + b.toString('hex');
     return id
 }
 
