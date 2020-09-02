@@ -21,4 +21,13 @@ step4:
 
 step5:
      desc: alloc wan to storeman working address and wallet address.
-     cmd:
+     cmd:  node alloc.js
+
+step6:
+  desc: openGroup
+  cmd:  node openGrp.js --rd  200  --gd 200  --hd 100   --tn 21   --th 17   --gid 'test-1'   --pgid ''  --srcid '2153201998'   --dstid '2147483708'   --scrv  1  --dcrv 1   --ms 2000   --md 100    --df 100   --wlStart 0   --wlCount  5
+
+
+step7:
+     desc: stake in
+     cmd:  node stakeIn.js --smsi 0 --smcnt 21 --amount 3000
