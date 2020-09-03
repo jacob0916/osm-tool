@@ -9,16 +9,16 @@ cmd:
 
 step1:
     desc: build nodekey and enodeId
-    cmd: node crEnodeId.js --nc 60
+    cmd: node crEnodeId.js --nc 60  --network testnet
 
 
 step2:
     desc: build working addr and keystore
-    cmd:   node crWalletAddr.js --nc 60
+    cmd:   node crWalletAddr.js --nc 60 --network testnet
 
 step3:
     desc: build wallet addr and keystore
-    cmd:   node crWalletAddr.js --nc 60 --wallet
+    cmd:   node crWalletAddr.js --nc 60 --wallet --network testnet
 
 step4:
         # wallet address  and keystore file name
@@ -26,11 +26,11 @@ step4:
         # working pk
         # enodeId
     desc: build relation of storeman info.
-    cmd:   node buildRelation.js
+    cmd:   node buildRelation.js --network testnet
 
 step5:
      desc: alloc wan to storeman working address and wallet address.
-     cmd:  node alloc.js
+     cmd:  node alloc.js --network testnet
 
 
 step6:
@@ -46,9 +46,9 @@ step6:
   6day: 518400
   7day: 604800
 
-  cmd:  node openGrp.js --rd  86400  --gd 86400  --hd 345600   --tn 21   --th 17   --gid 'test-1'   --pgid ''  --srcid '2153201998'   --dstid '2147483708'   --scrv  1  --dcrv 1   --ms 2000   --md 100   --mp 50 --df 100   --wlStart 0   --wlCount  5
+  cmd:  node openGrp.js --network testnet --rd  86400  --gd 86400  --hd 345600   --tn 21   --th 17   --gid 'test-1'   --pgid ''  --srcid '2153201998'   --dstid '2147483708'   --scrv  1  --dcrv 1   --ms 2000   --md 100   --mp 50 --df 100   --wlStart 0   --wlCount  5
 
 
 step7:
      desc: stake in
-     cmd:  node stakeIn.js --gid 'test-1' --smsi 0 --smcnt 21 --amount 3000
+     cmd:  node stakeIn.js --network testnet --gid 'test-1' --smsi 0 --smcnt 21 --amount 3000

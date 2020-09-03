@@ -1,5 +1,3 @@
-const optimist = require('optimist');
-const config = require('../cfg/config');
 const BigInteger = require('bigi');
 const fs = require('fs');
 const path = require('path');
@@ -8,15 +6,19 @@ const ecurve = require('ecurve');
 const ecparams = ecurve.getCurveByName('secp256k1');
 const wanutil = require('wanchain-util');
 
+const optimist = require('optimist');
 let argv = optimist
     .usage("Usage: $0  --nc [index] --wallet [true]")
     .alias('h', 'help')
     .describe('nc', 'Number count')
     .describe('wallet', 'Wallet address or working address')
+    .describe('network', 'network')
     .default('nc', 1)
+    .default('network', 'internal')
     .default('wallet', false)
     .boolean('wallet')
     .argv;
+const config = require('../cfg/config');
 
 const Web3 = require('web3');
 const net = require('net');
@@ -26,7 +28,9 @@ const ethUtil = require("ethereumjs-util");
 function main() {
     // --nc 20 --wallet
     let nc = argv["nc"];
+    global.network=argv["network"];
     let wallet = argv["wallet"];
+
     console.log(wallet);
     let fileContent = '';
     for (let i = 0; i < nc; i++) {

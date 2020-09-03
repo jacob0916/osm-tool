@@ -2,10 +2,17 @@ const Web3 = require('web3');
 const net = require('net');
 const fs = require('fs');
 const readline = require('readline');
-
+const optimist = require('optimist');
+let argv = optimist
+    .usage("Usage: $0  --nc [index] --wallet [true]")
+    .alias('h', 'help')
+    .describe('network', 'network')
+    .default('network', 'internal')
+    .argv;
+global.network = argv["network"];
 const config = require('../cfg/config');
-let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
+let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
 async function main() {
     let addr = null;

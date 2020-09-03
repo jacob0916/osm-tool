@@ -32,7 +32,6 @@ wlWalletAddr            []
 gasPrice
 gas
  */
-const config = require('../cfg/config');
 const Web3 = require('web3');
 const net = require('net');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
@@ -59,6 +58,7 @@ let argv = optimist
     .describe('df', 'delegateFee')
     .describe('wlStart', 'White start index')
     .describe('wlCount', 'White count')
+    .describe('network', 'network name')
     .default('tn', 21)
     .default('th', 17)
     .default('srcid', '2153201998')
@@ -71,7 +71,11 @@ let argv = optimist
     .default('md', 100)
     .default('mp', 50)
     .default('df', 100)
+    .default('network', 'internal')
     .argv;
+global.network = argv["network"];
+
+const config = require('../cfg/config');
 
 let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx} = require('./util/wanchain');
 
@@ -88,6 +92,7 @@ function getGrpIdByString(str) {
 }
 
 async function main() {
+
     // only admin can open group.
     let smIn = {
         regDur: argv.rd,
