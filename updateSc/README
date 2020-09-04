@@ -1,0 +1,11 @@
+step1:
+
+    modify the truffle-config.js
+
+step2:
+
+    edit the upgrate script and put it on ./update directory.
+
+step3:
+    ./up.sh  <testnet|mainnet>
+
