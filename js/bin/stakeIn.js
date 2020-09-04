@@ -9,11 +9,9 @@ stakeInValue
 smStartIndex
 smCount
  */
-let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx} = require('./util/wanchain');
 
 const Web3 = require('web3');
 const net = require('net');
-let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 const fs = require('fs');
 const readline = require('readline');
 
@@ -30,8 +28,13 @@ let argv = optimist
     .default('amount', 2000)
     .default('network', 'internal')
     .argv;
+
+console.log("=====================start====================");
 global.network = argv["network"];
 const config = require('../cfg/config');
+let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
+
+let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx} = require('./util/wanchain');
 
 async function main() {
 
@@ -48,12 +51,14 @@ async function main() {
 
     for (let i = smStartIndex; i < smStartIndex + smCount; i++) {
         console.log(linesRelation[i]);
-        await doStake(split(linesRelation[i])[0],
+        let txHash = await doStake(split(linesRelation[i])[0],
             config.smgScAddr,
             msgValue,
             grpId,
             split(linesRelation[i])[2],
-            split(linesRelation[i])[3],);
+            split(linesRelation[i])[3]);
+
+        console.log("============txHash",txHash);
     }
     console.log("========================done=========================");
 

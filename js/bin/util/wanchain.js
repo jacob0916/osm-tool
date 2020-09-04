@@ -29,6 +29,8 @@ async function sendTx(senderAddr, contractAddr, msgValue, data) {
         };
         rawTx.nonce = await getNonceByWeb3(senderAddr);
         let tx = new Tx(rawTx);
+        console.log("sendTx senderAddr",senderAddr);
+        console.log("sendTx nonce",rawTx.nonce.toString(10));
         tx.sign(getSk(senderAddr));
         web3.eth.sendSignedTransaction('0x' + tx.serialize().toString('hex'))
             .on('transactionHash', txHash => {
@@ -95,9 +97,30 @@ async function getNonceByWeb3(addr, includePendingOrNot = true) {
 };
 
 
+
+// let smIn = {
+//     regDur: argv.rd,
+//     gpkDur: argv.gd,
+//     htlcDur: argv.hd,
+//     totalNodes: argv.tn,
+//     thresholds: argv.th,
+//     grpId: argv.gid,
+//     preGrpId: argv.pgid,
+//     srcChainId: argv.srcid,
+//     dstChainId: argv.dstid,
+//     srcCurve: argv.scrv,
+//     dstCurve: argv.dcrv,
+//     minStakeIn: argv.ms,
+//     minDelegateIn: argv.md,
+//     minPartIn:argv.mp,
+//     delegateFee: argv.df,
+//     workTime: '',
+//     totalTime: ''
+// };
 function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
     console.log("wlWkAddr",wlWkAddr);
     console.log("wlWalletAddr",wlWalletAddr);
+    let now = parseInt(Date.now()/1000);
     let c = getContract(config.smgAbi, config.smgScAddr);
     return c.methods.storemanGroupRegisterStart(
         [smIn.grpId, smIn.preGrpId, smIn.workTime, smIn.totalTime, smIn.regDur, smIn.totalNodes, smIn.thresholds,
@@ -105,6 +128,17 @@ function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
             smIn.minPartIn,smIn.delegateFee],
         wlWkAddr,
         wlWalletAddr).encodeABI();
+
+    // todo should change.
+    // only for old version openStoreman group.
+    // return c.methods.storemanGroupRegisterStart(
+    //     smIn.grpId,
+    //     now+10,
+    //     smIn.totalTime,
+    //     smIn.regDur,
+    //     smIn.preGrpId,
+    //     wlWkAddr,
+    //     wlWalletAddr).encodeABI();
 }
 
 function buildStakeInData(grpId, wkPk, enodeId) {

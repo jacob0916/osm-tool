@@ -34,7 +34,6 @@ gas
  */
 const Web3 = require('web3');
 const net = require('net');
-let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 const fs = require('fs');
 const readline = require('readline');
 
@@ -76,6 +75,7 @@ let argv = optimist
 global.network = argv["network"];
 
 const config = require('../cfg/config');
+let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
 let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx} = require('./util/wanchain');
 
@@ -147,6 +147,9 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
             let data = await buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr);
             console.log("data of doOpenGrp",data);
             let txHash = '';
+
+            //todo should change
+            //txHash = await sendTx(config.ownerAddr, config.smgScAddr, 0x0, data);
             txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
             console.log("doOpenGrp txHash",txHash);
             resolve(txHash);
