@@ -15,6 +15,7 @@ let argv = optimist
     .default('nc', 1)
     .default('network', 'internal')
     .argv;
+global.network = argv["network"];
 const config = require('../cfg/config');
 
 const Web3 = require('web3');

@@ -51,4 +51,4 @@ step6:
 
 step7:
      desc: stake in
-     cmd:  node stakeIn.js --network testnet --gid 'test-1' --smsi 0 --smcnt 25 --amount 3000
+     cmd:  node stakeIn.js --network testnet --gid 'osm-09-09' --smsi 0 --smcnt 25 --amount 3000

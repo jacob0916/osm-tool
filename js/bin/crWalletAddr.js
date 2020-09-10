@@ -18,6 +18,7 @@ let argv = optimist
     .default('wallet', false)
     .boolean('wallet')
     .argv;
+global.network = argv["network"];
 const config = require('../cfg/config');
 
 const Web3 = require('web3');

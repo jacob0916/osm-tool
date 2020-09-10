@@ -3,7 +3,7 @@ const net = require('net');
 const fs = require('fs');
 const readline = require('readline');
 
-let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
+
 const pu = require('promisefy-util');
 
 const optimist = require('optimist');
@@ -16,6 +16,7 @@ let argv = optimist
 
 global.network = argv["network"];
 const config = require('../cfg/config');
+let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
 const sender = config.ownerAddr;
 
@@ -45,7 +46,11 @@ async function doAlloc() {
     let linesRelation = await processLineByLine(config.RelationList);
 
     for (let i = 0; i < linesRelation.length; i++) {
-        await alloc(split(linesRelation[i])[0], config.allocValue);
+        if(parseInt(i) == 0){
+            await alloc(split(linesRelation[i])[0], config.allocValue);
+        }else{
+            await alloc(split(linesRelation[i])[0], parseInt(config.allocValue/10));
+        }
         await alloc(split(linesRelation[i])[1], config.allocWKValue);
     }
 

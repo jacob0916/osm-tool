@@ -51,9 +51,17 @@ async function main() {
 
     for (let i = smStartIndex; i < smStartIndex + smCount; i++) {
         console.log(linesRelation[i]);
+        let msgValueTemp;
+        if(parseInt(i) == 0){
+            msgValueTemp = web3.utils.toBN(argv.amount).sub(web3.utils.toBN(i));
+        }else{
+            msgValueTemp = web3.utils.toBN(argv.amount).div(web3.utils.toBN(10)).sub(web3.utils.toBN(i));
+        }
+        console.log("msgValueTemp",msgValueTemp.toString(10));
+
         let txHash = await doStake(split(linesRelation[i])[0],
             config.smgScAddr,
-            msgValue,
+            msgValueTemp,
             grpId,
             split(linesRelation[i])[2],
             split(linesRelation[i])[3]);
