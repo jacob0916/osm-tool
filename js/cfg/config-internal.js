@@ -12,11 +12,16 @@ exports.ownerAddr ='0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e';
 exports.adminAddr ='0x5793e629c061e7fd642ab6a1b4d552cec0e2d606';
 exports.password = "wanglu";
 
-exports.allocValue = 2;
-exports.allocWKValue = 1;
+exports.allocValue = 100;
+exports.allocWKValue = 10;
 
 exports.gasPrice = 180000000000;
 exports.gasLimit = 10000000;
+
+exports.gasPriceTransfer = 1e9;
+exports.gasLimitTransfer = 21000;
+
+exports.gatherKsList = path.join(__dirname,"../bin/gatherList");
 
 exports.smgScAddr = '0x24D8Ae2089Cee8Bde68c59f2d957e2D881981748';
 

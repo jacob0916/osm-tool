@@ -27,6 +27,7 @@ async function alloc(addr, amount) {
             to: addr,
             value: web3.utils.toWei(web3.utils.toBN(amount))
         }], web3.eth);
+        console.log("alloc tx hash :", tx);
     } catch (err) {
         console.log("err:", err)
     }
@@ -45,7 +46,8 @@ async function doAlloc() {
     let ret = [];
     let linesRelation = await processLineByLine(config.RelationList);
 
-    for (let i = 0; i < linesRelation.length; i++) {
+    //for (let i = 0; i < linesRelation.length; i++) {
+    for (let i = 0; i < 1; i++) {
         if(parseInt(i) == 0){
             await alloc(split(linesRelation[i])[0], config.allocValue);
         }else{
