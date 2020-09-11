@@ -46,8 +46,8 @@ async function doAlloc() {
     let ret = [];
     let linesRelation = await processLineByLine(config.RelationList);
 
-    //for (let i = 0; i < linesRelation.length; i++) {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < linesRelation.length; i++) {
+    //for (let i = 0; i < 1; i++) {
         if(parseInt(i) == 0){
             await alloc(split(linesRelation[i])[0], config.allocValue);
         }else{
