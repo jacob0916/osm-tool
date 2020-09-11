@@ -53,9 +53,9 @@ async function main() {
         console.log(linesRelation[i]);
         let msgValueTemp;
         if(parseInt(i) == 0){
-            msgValueTemp = web3.utils.toBN(argv.amount).sub(web3.utils.toBN(i));
+            msgValueTemp = web3.utils.toBN(argv.amount).div(web3.utils.toBN(2)).sub(web3.utils.toBN(i));
         }else{
-            msgValueTemp = web3.utils.toBN(argv.amount).div(web3.utils.toBN(10)).sub(web3.utils.toBN(i));
+            msgValueTemp = web3.utils.toBN(argv.amount).div(web3.utils.toBN(20)).sub(web3.utils.toBN(i));
         }
         console.log("msgValueTemp",msgValueTemp.toString(10));
 

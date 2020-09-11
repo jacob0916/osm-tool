@@ -10,8 +10,39 @@ function getSk(address) {
     return KeyStore.getPrivateKeyByKsPath(address, config.password, config.ksDir); // Buffer
 }
 
+function getSkByFile(address, filePath) {
+    return KeyStore.getPrivateKeyByKsFile(address, config.password, filePath); // Buffer
+}
+
 function getContract(abi, address) {
     return new web3.eth.Contract(abi, address);
+}
+
+
+async function sendWan(from, to, value, ksFile) {
+    return new Promise(async (resolve) => {
+        let rawTx = {
+            Txtype: 0x01, // wanchain only
+            gasPrice: web3.utils.toBN(config.gasPriceTransfer),
+            gasLimit: web3.utils.toBN(config.gasLimitTransfer),
+            to: to,
+            value: web3.utils.toBN(value),
+            data: '0x'
+        };
+        rawTx.nonce = await getNonceByWeb3(from);
+        let tx = new Tx(rawTx);
+        console.log("sendTx senderAddr", from);
+        console.log("sendTx nonce", rawTx.nonce.toString(10));
+        tx.sign(getSkByFile(from, ksFile));
+        web3.eth.sendSignedTransaction('0x' + tx.serialize().toString('hex'))
+            .on('transactionHash', txHash => {
+                resolve(txHash);
+            })
+            .on('error', err => {
+                console.error("sendWan error", err);
+                resolve('');
+            })
+    });
 }
 
 async function sendTx(senderAddr, contractAddr, msgValue, data) {
@@ -29,8 +60,8 @@ async function sendTx(senderAddr, contractAddr, msgValue, data) {
         };
         rawTx.nonce = await getNonceByWeb3(senderAddr);
         let tx = new Tx(rawTx);
-        console.log("sendTx senderAddr",senderAddr);
-        console.log("sendTx nonce",rawTx.nonce.toString(10));
+        console.log("sendTx senderAddr", senderAddr);
+        console.log("sendTx nonce", rawTx.nonce.toString(10));
         tx.sign(getSk(senderAddr));
         web3.eth.sendSignedTransaction('0x' + tx.serialize().toString('hex'))
             .on('transactionHash', txHash => {
@@ -49,7 +80,7 @@ async function getTxReceipt(txHash, name = '') {
         let receipt = await web3.eth.getTransactionReceipt(txHash);
         console.log("getTxReceipt %s(%s) receipt %s gas %s", name, txHash, receipt.status, receipt.gasUsed);
         return receipt;
-    } catch(err) {
+    } catch (err) {
         console.log("getTxReceipt %s(%s) none: %O", name, txHash, err);
         return null;
     }
@@ -97,7 +128,6 @@ async function getNonceByWeb3(addr, includePendingOrNot = true) {
 };
 
 
-
 // let smIn = {
 //     regDur: argv.rd,
 //     gpkDur: argv.gd,
@@ -118,14 +148,14 @@ async function getNonceByWeb3(addr, includePendingOrNot = true) {
 //     totalTime: ''
 // };
 function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
-    console.log("wlWkAddr",wlWkAddr);
-    console.log("wlWalletAddr",wlWalletAddr);
-    let now = parseInt(Date.now()/1000);
+    console.log("wlWkAddr", wlWkAddr);
+    console.log("wlWalletAddr", wlWalletAddr);
+    let now = parseInt(Date.now() / 1000);
     let c = getContract(config.smgAbi, config.smgScAddr);
     return c.methods.storemanGroupRegisterStart(
         [smIn.grpId, smIn.preGrpId, smIn.workTime, smIn.totalTime, smIn.regDur, smIn.totalNodes, smIn.thresholds,
             smIn.srcChainId, smIn.dstChainId, smIn.srcCurve, smIn.dstCurve, smIn.minStakeIn, smIn.minDelegateIn,
-            smIn.minPartIn,smIn.delegateFee],
+            smIn.minPartIn, smIn.delegateFee],
         wlWkAddr,
         wlWalletAddr).encodeABI();
 
@@ -143,7 +173,7 @@ function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
 
 function buildStakeInData(grpId, wkPk, enodeId) {
     let c = getContract(config.smgAbi, config.smgScAddr);
-    return c.methods.stakeIn(grpId,wkPk,enodeId).encodeABI();
+    return c.methods.stakeIn(grpId, wkPk, enodeId).encodeABI();
 }
 
 module.exports = {
@@ -151,5 +181,5 @@ module.exports = {
     buildStakeInData,
     getTxReceipt,
     sendTx,
-
+    sendWan,
 };

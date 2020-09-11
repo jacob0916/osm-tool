@@ -35,5 +35,20 @@ const keyStore = {
         return privKeyA;
     },
 
+    getPrivateKeyByKsFile(address,password,filePath){
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>keystore filepath:" + filePath);
+        let keystore = this.getFromFile(filePath);
+        let keyAObj = {version:keystore.version, crypto:keystore.crypto};
+        let privKeyA;
+        try {
+            privKeyA = keythereum.recover(password, keyAObj);
+        }catch(error){
+            console.log('User Transaction input : ', 'wrong password');
+            return null;
+        }
+        return privKeyA;
+    },
+
 };
 module.exports = keyStore;
