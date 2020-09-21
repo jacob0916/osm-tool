@@ -58,6 +58,9 @@ let argv = optimist
     .describe('wlStart', 'White start index')
     .describe('wlCount', 'White count')
     .describe('network', 'network name')
+    // .string('ms')
+    // .string('md')
+    // .string('mp')
     .default('tn', 21)
     .default('th', 17)
     .default('srcid', '2153201998')
@@ -148,8 +151,6 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
             console.log("data of doOpenGrp",data);
             let txHash = '';
 
-            //todo should change
-            //txHash = await sendTx(config.ownerAddr, config.smgScAddr, 0x0, data);
             txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
             console.log("doOpenGrp txHash",txHash);
             resolve(txHash);

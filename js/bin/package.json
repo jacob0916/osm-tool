@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bigi": "^1.4.2",
+    "bignumber": "^1.1.0",
     "ecurve": "^1.0.6",
     "keythereum": "^1.0.4",
     "optimist": "^0.6.1",

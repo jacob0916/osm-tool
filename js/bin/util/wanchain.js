@@ -5,6 +5,8 @@ const wanUtil = require('wanchain-util');
 const Tx = wanUtil.wanchainTx;
 
 const web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
+const BigNubmer = require('bignumber.js');
+
 
 function getSk(address) {
     return KeyStore.getPrivateKeyByKsPath(address, config.password, config.ksDir); // Buffer
@@ -152,10 +154,35 @@ function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
     console.log("wlWalletAddr", wlWalletAddr);
     let now = parseInt(Date.now() / 1000);
     let c = getContract(config.smgAbi, config.smgScAddr);
+
+    console.log("msInput",smIn.minStakeIn);
+
+    let msBig = new BigNubmer(smIn.minStakeIn);
+    let mdBig = new BigNubmer(smIn.minDelegateIn);
+    let mpBig = new BigNubmer(smIn.minPartIn);
+
+    let ms,md,mp;
+
+    ms = msBig.toString(10);
+    md = mdBig.toString(10);
+    mp = mpBig.toString(10);
+
+    console.log("========================");
+    console.log("ms",ms);
+    console.log("md",md);
+    console.log("mp",mp);
+
+    // return c.methods.storemanGroupRegisterStart(
+    //     [smIn.grpId, smIn.preGrpId, smIn.workTime, smIn.totalTime, smIn.regDur, smIn.totalNodes, smIn.thresholds,
+    //         smIn.srcChainId, smIn.dstChainId, smIn.srcCurve, smIn.dstCurve, smIn.minStakeIn, smIn.minDelegateIn,
+    //         smIn.minPartIn, smIn.delegateFee],
+    //     wlWkAddr,
+    //     wlWalletAddr).encodeABI();
+
     return c.methods.storemanGroupRegisterStart(
         [smIn.grpId, smIn.preGrpId, smIn.workTime, smIn.totalTime, smIn.regDur, smIn.totalNodes, smIn.thresholds,
-            smIn.srcChainId, smIn.dstChainId, smIn.srcCurve, smIn.dstCurve, smIn.minStakeIn, smIn.minDelegateIn,
-            smIn.minPartIn, smIn.delegateFee],
+            smIn.srcChainId, smIn.dstChainId, smIn.srcCurve, smIn.dstCurve, ms, md,
+            mp, smIn.delegateFee],
         wlWkAddr,
         wlWalletAddr).encodeABI();
 
