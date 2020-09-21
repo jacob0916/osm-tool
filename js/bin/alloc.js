@@ -51,7 +51,8 @@ async function doAlloc() {
         if(parseInt(i) == 0){
             await alloc(split(linesRelation[i])[0], config.allocValue);
         }else{
-            await alloc(split(linesRelation[i])[0], parseInt(config.allocValue/10));
+            //await alloc(split(linesRelation[i])[0], parseInt(config.allocValue/10));
+            await alloc(split(linesRelation[i])[0], config.allocValue);
         }
         await alloc(split(linesRelation[i])[1], config.allocWKValue);
     }

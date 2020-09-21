@@ -1,5 +1,8 @@
 const path = require('path');
 exports.wanNodeURL = 'http://192.168.1.179:7654';
+exports.gskList = path.join(__dirname,"../output-internal/gskList");
+exports.gpkKsDir = path.join(__dirname,"../output-internal/gpkKs");
+
 
 exports.nodeKeyList = path.join(__dirname,"../output-internal/nodeKeyList");
 exports.WalletAddList = path.join(__dirname,"../output-internal/WalletAddList");

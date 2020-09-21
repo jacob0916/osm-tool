@@ -46,7 +46,9 @@ step6:
   6day: 518400
   7day: 604800
 
-  cmd:  node openGrp.js --network testnet --rd  86400  --gd 86400  --hd 345600   --tn 21   --th 17   --gid 'test-1'   --pgid ''  --srcid '2153201998'   --dstid '2147483708'   --scrv  1  --dcrv 1   --ms 2000   --md 100   --mp 50 --df 100   --wlStart 0   --wlCount  5
+  cmd:  node openGrp.js --network testnet --rd 86400 --gd 86400  --hd 345600 --tn 21 --th 17 --gid 'test-1' --pgid '' --srcid '2153201998' --dstid '2147483708' --scrv  1  --dcrv 1 --ms 2000 --md 100 --mp 50 --df 100 --wlStart 0 --wlCount  5
+
+        node openGrp.js --network testnet --rd 1200 --gd 1200   --hd 345600 --tn 21 --th 17 --gid 'FE' --pgid '' --srcid '2153201998' --dstid '2147483708' --scrv  1  --dcrv 1 --ms 2e18 --md 1e18 --mp 1e18 --df 100 --wlStart 0 --wlCount  5
 
 
 step7:
