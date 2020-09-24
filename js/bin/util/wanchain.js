@@ -203,9 +203,15 @@ function buildStakeInData(grpId, wkPk, enodeId) {
     return c.methods.stakeIn(grpId, wkPk, enodeId).encodeABI();
 }
 
+function buildStakeOutData(wkAddr) {
+    let c = getContract(config.smgAbi, config.smgScAddr);
+    return c.methods.stakeClaim(wkAddr).encodeABI();
+}
+
 module.exports = {
     buildOpenGrpData,
     buildStakeInData,
+    buildStakeOutData,
     getTxReceipt,
     sendTx,
     sendWan,
