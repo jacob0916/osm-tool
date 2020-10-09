@@ -7,9 +7,9 @@ function stringTobytes32(name) {
 
 const optimist = require('optimist');
 let argv = optimist
-    .describe('gpName', 'group name')
+    .describe('grpName', 'group name')
     .argv;
-global.grpName = argv["gpName"];
+global.grpName = argv["grpName"];
 
 
 function getGrpIdByString(str) {

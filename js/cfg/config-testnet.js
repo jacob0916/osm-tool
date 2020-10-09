@@ -29,7 +29,7 @@ exports.ownerAddr ='0x9da26fc2e1d6ad9fdd46138906b0104ae68a65d8';
 exports.adminAddr ='0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e';
 exports.password = "wanglu";
 
-exports.allocValue = 10000;
+exports.allocValue = 12000;
 exports.allocWKValue = 100;
 
 exports.gasPrice = 180000000000;
