@@ -121,6 +121,8 @@ async function main() {
     console.log(smIn);
 
     // waddr, wkaddr, wkpk, enodeId
+
+
     let linesRelation = await processLineByLine(config.RelationList);
     let wlWallectAddr = [];
     let wlWkAddr = [];
@@ -129,6 +131,7 @@ async function main() {
         wlWallectAddr.push(split(linesRelation[i])[0]);
         wlWkAddr.push(split(linesRelation[i])[1]);
     }
+
     updateSmIn(smIn);
     console.log("smIn",smIn);
     await doOpenGrp(smIn, wlWkAddr, wlWallectAddr);
@@ -138,7 +141,8 @@ async function main() {
 
 function updateSmIn(smIn) {
     // build workTime and totalTime
-    smIn.workTime = parseInt(Date.now() / 1000) + smIn.regDur + smIn.gpkDur;
+    //smIn.workTime = parseInt(Date.now() / 1000) + smIn.regDur + smIn.gpkDur;
+    smIn.workTime = parseInt(Date.now() / 1000/3600+1)*3600 + smIn.regDur + smIn.gpkDur;
     smIn.totalTime = smIn.htlcDur;
     smIn.grpId = getGrpIdByString(smIn.grpId);
     smIn.preGrpId = getGrpIdByString(smIn.preGrpId);
@@ -151,7 +155,9 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
             console.log("data of doOpenGrp",data);
             let txHash = '';
 
-            txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+
+            // txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+
             console.log("doOpenGrp txHash",txHash);
             resolve(txHash);
         } catch (err) {
