@@ -156,7 +156,7 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
             let txHash = '';
 
 
-            // txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+            txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
 
             console.log("doOpenGrp txHash",txHash);
             resolve(txHash);
