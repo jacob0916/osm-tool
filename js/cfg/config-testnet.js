@@ -5,24 +5,12 @@ exports.gskList = path.join(__dirname,"../output-testnet/gskList");
 exports.gpkKsDir = path.join(__dirname,"../output-testnet/gpkKs");
 
 
-
 exports.nodeKeyList = path.join(__dirname,"../output-testnet/nodeKeyList");
 exports.WalletAddList = path.join(__dirname,"../output-testnet/WalletAddList");
 exports.WorkingAddList = path.join(__dirname,"../output-testnet/WorkingAddList");
 exports.RelationList = path.join(__dirname,"../output-testnet/RelationList");
 
 exports.ksDir = path.join(__dirname,"../output-testnet/ks");
-
-
-
-// exports.nodeKeyList = path.join(__dirname,"../output-testnet-0915/nodeKeyList");
-// exports.WalletAddList = path.join(__dirname,"../output-testnet-0915/WalletAddList");
-// exports.WorkingAddList = path.join(__dirname,"../output-testnet-0915/WorkingAddList");
-// exports.RelationList = path.join(__dirname,"../output-testnet-0915/RelationList");
-//
-// exports.ksDir = path.join(__dirname,"../output-testnet-0915/ks");
-
-
 
 
 exports.ownerAddr ='0x9da26fc2e1d6ad9fdd46138906b0104ae68a65d8';

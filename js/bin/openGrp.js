@@ -141,8 +141,9 @@ async function main() {
 
 function updateSmIn(smIn) {
     // build workTime and totalTime
-    //smIn.workTime = parseInt(Date.now() / 1000) + smIn.regDur + smIn.gpkDur;
-    smIn.workTime = parseInt(Date.now() / 1000/3600+1)*3600 + smIn.regDur + smIn.gpkDur;
+    let regDay = parseInt(smIn.regDur/86400);
+    console.log("regDay",regDay);
+    smIn.workTime = parseInt(Date.now() / 1000/86400 + regDay +1 )*86400 + 3600*4;
     smIn.totalTime = smIn.htlcDur;
     smIn.grpId = getGrpIdByString(smIn.grpId);
     smIn.preGrpId = getGrpIdByString(smIn.preGrpId);
