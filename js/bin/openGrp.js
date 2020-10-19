@@ -141,12 +141,23 @@ async function main() {
 
 function updateSmIn(smIn) {
     // build workTime and totalTime
-    let regDay = parseInt(smIn.regDur/86400);
+    let regDay = 0;
+    if(parseInt(smIn.regDur%86400) == 0){
+        regDay = parseInt(smIn.regDur/86400);
+    }else{
+        regDay = parseInt(smIn.regDur/86400) + 1;
+    }
     console.log("regDay",regDay);
-    let gpkDay = parseInt(smIn.gpkDur/86400) + 1;
+
+    let gpkDay = 0;
+    if(parseInt(smIn.gpkDur%86400) == 0){
+        gpkDay = parseInt(smIn.gpkDur/86400);
+    }else{
+        gpkDay = parseInt(smIn.gpkDur/86400) + 1;
+    }
     console.log("gpkDay",gpkDay);
 
-    smIn.workTime = parseInt(Date.now() / 1000/86400 + regDay +1 )*86400 + 3600*4;
+    smIn.workTime = parseInt(Date.now() / 1000/86400 + regDay )*86400 + 3600*4;
     smIn.workTime = smIn.workTime + gpkDay*86400;
 
     smIn.totalTime = smIn.htlcDur;
