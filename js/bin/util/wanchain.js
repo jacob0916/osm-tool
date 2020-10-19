@@ -172,13 +172,6 @@ function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
     console.log("md",md);
     console.log("mp",mp);
 
-    // return c.methods.storemanGroupRegisterStart(
-    //     [smIn.grpId, smIn.preGrpId, smIn.workTime, smIn.totalTime, smIn.regDur, smIn.totalNodes, smIn.thresholds,
-    //         smIn.srcChainId, smIn.dstChainId, smIn.srcCurve, smIn.dstCurve, smIn.minStakeIn, smIn.minDelegateIn,
-    //         smIn.minPartIn, smIn.delegateFee],
-    //     wlWkAddr,
-    //     wlWalletAddr).encodeABI();
-
     return c.methods.storemanGroupRegisterStart(
         [smIn.grpId, smIn.preGrpId, smIn.workTime, smIn.totalTime, smIn.regDur, smIn.totalNodes, smIn.thresholds,
             smIn.srcChainId, smIn.dstChainId, smIn.srcCurve, smIn.dstCurve, ms, md,
@@ -186,16 +179,6 @@ function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
         wlWkAddr,
         wlWalletAddr).encodeABI();
 
-    // todo should change.
-    // only for old version openStoreman group.
-    // return c.methods.storemanGroupRegisterStart(
-    //     smIn.grpId,
-    //     now+10,
-    //     smIn.totalTime,
-    //     smIn.regDur,
-    //     smIn.preGrpId,
-    //     wlWkAddr,
-    //     wlWalletAddr).encodeABI();
 }
 
 function buildStakeInData(grpId, wkPk, enodeId) {
@@ -208,6 +191,12 @@ function buildStakeOutData(wkAddr) {
     return c.methods.stakeClaim(wkAddr).encodeABI();
 }
 
+//setPeriod('0x000000000000000000000000000000000000000000746573746e65745f303032',259200,86400,259200,{from:'0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e',gasLimit:1e9,gasPrice:1e12})
+function buildSetPeriod(grpId, ployCommitTimeout, defaultTimeout, neogationTimeout){
+    let c = getContract(config.gpkAbi, config.gpkScAddr);
+    return c.methods.setPeriod(grpId,ployCommitTimeout,defaultTimeout,neogationTimeout).encodeABI();
+}
+
 module.exports = {
     buildOpenGrpData,
     buildStakeInData,
@@ -215,4 +204,5 @@ module.exports = {
     getTxReceipt,
     sendTx,
     sendWan,
+    buildSetPeriod,
 };
