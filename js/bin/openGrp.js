@@ -143,7 +143,12 @@ function updateSmIn(smIn) {
     // build workTime and totalTime
     let regDay = parseInt(smIn.regDur/86400);
     console.log("regDay",regDay);
+    let gpkDay = parseInt(smIn.gpkDur/86400) + 1;
+    console.log("gpkDay",gpkDay);
+
     smIn.workTime = parseInt(Date.now() / 1000/86400 + regDay +1 )*86400 + 3600*4;
+    smIn.workTime = smIn.workTime + gpkDay*86400;
+
     smIn.totalTime = smIn.htlcDur;
     smIn.grpId = getGrpIdByString(smIn.grpId);
     smIn.preGrpId = getGrpIdByString(smIn.preGrpId);
@@ -157,7 +162,7 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
             let txHash = '';
 
 
-            txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+            //txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
 
             console.log("doOpenGrp txHash",txHash);
             resolve(txHash);
