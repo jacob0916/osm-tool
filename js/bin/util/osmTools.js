@@ -153,9 +153,71 @@ function getTimeStampByStr(dateTimeStr) {
         return myDate.getTime() / 1000;
     }
 }
+// uint m
+function getStrByTimeStamp(curTS){
+    let myDate = new Date();
+    myDate.setTime(parseInt(curTS) * 1000);
+
+    // console.log(myDate.toDateString());
+    // console.log(myDate.toLocaleDateString());
+    // console.log(myDate.toLocaleString());
+    // console.log(myDate.toLocaleTimeString());
+
+    let ret ='';
+    ret += replaceAll('-','/',myDate.toLocaleDateString());
+    ret += '-' + myDate.toLocaleTimeString();
+    return ret;
+}
+
+
+function replaceAll(find, replace, str) {
+    var find = find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    return str.replace(new RegExp(find, 'g'), replace);
+}
 
 function getGrpIdByString(str) {
     return stringTobytes32(str);
+}
+
+function PrefixInteger(num, length) {
+    return (Array(length).join('0') + num).slice(-length);
+}
+
+// testnet_001
+function getNextGrpName(curGrpName,seperator){
+    let [prefix, number] = curGrpName.toString().split(seperator);
+    let nextNumber = parseInt(number) + 1;
+
+    let ret = '';
+    ret += prefix + seperator + PrefixInteger(nextNumber, number.length);
+    return ret;
+}
+
+function getPreGrpName(curGrpName,seperator){
+    let [prefix, number] = curGrpName.toString().split(seperator);
+    let nextNumber = parseInt(number) - 1;
+
+    if(parseInt(nextNumber) <=0 ){
+        throw new Error("the pre group number is negative");
+    }
+
+    let ret = '';
+    ret += prefix + seperator + PrefixInteger(nextNumber, number.length);
+    return ret;
+}
+//2020/10/23-12:00:00
+function getNextWorkTime(curWorkTime, duringDay){
+    let curTS = getTimeStampByStr(curWorkTime);
+    curTS += parseInt(duringDay) * 86400;
+    return getStrByTimeStamp(curTS);
+
+}
+//2020/10/23-12:00:00
+function getPreWorkTime(curWorkTime, duringDay){
+    let curTS = getTimeStampByStr(curWorkTime);
+    curTS -= parseInt(duringDay * 86400);
+
+    return getStrByTimeStamp(curTS);
 }
 
 module.exports = {
@@ -167,5 +229,9 @@ module.exports = {
     bufferToHexString,
     baseScarMulti,
     getTimeStampByStr,
-    getGrpIdByString
+    getGrpIdByString,
+    getNextGrpName,
+    getPreGrpName,
+    getNextWorkTime,
+    getPreWorkTime,
 }

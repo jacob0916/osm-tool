@@ -38,6 +38,39 @@ function main(){
     let pGrpId = 0;
     let ppGrpId = 0;
     // get parent group id , get parent of parent group id
+    let fwkTime = '2020/10/20-18:00:00';
+    for(let i= 0; i<10;i++){
+        let nextWkTime = osmTools.getNextWorkTime(fwkTime,7);
+        console.log(nextWkTime);
+
+        fwkTime = nextWkTime;
+    }
+
+    console.log("\n\n");
+
+    for(let i= 0; i<10;i++){
+        let nextWkTime = osmTools.getPreWorkTime(fwkTime,7);
+        console.log(nextWkTime);
+
+        fwkTime = nextWkTime;
+    }
+
+    let curGrpName = 'testnet_005';
+    for(let i= 0; i<100;i++){
+        let nextGrpName = osmTools.getNextGrpName(curGrpName,'_');
+        console.log(nextGrpName);
+
+        curGrpName = nextGrpName
+    }
+
+    console.log("\n\n");
+
+    for(let i= 0; i<120;i++){
+        let nextGrpName = osmTools.getPreGrpName(curGrpName,'_');
+        console.log(nextGrpName);
+
+        curGrpName = nextGrpName
+    }
 
 }
 
