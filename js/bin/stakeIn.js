@@ -15,6 +15,8 @@ const fs = require('fs');
 const readline = require('readline');
 const BigNumber = require('bignumber.js');
 
+const osmTools = require('./util/osmTools');
+
 const optimist = require('optimist');
 let argv = optimist
     .alias('h', 'help')
@@ -40,7 +42,7 @@ async function main() {
 
     // only admin can open group.
     console.log(argv);
-    let grpId = getGrpIdByString(argv.gid);
+    let grpId = osmTools.getGrpIdByString(argv.gid);
     let smStartIndex = argv.smsi;
     let smCount = argv.smcnt;
     //let msgValue = web3.utils.toBN(argv.amount);
@@ -49,7 +51,7 @@ async function main() {
     amountBig = new BigNumber(argv.amount);
     console.log("amountBig", amountBig.toString(10));
     // waddr, wkaddr, wkpk, enodeId
-    let linesRelation = await processLineByLine(config.RelationList);
+    let linesRelation = await osmTools.processLineByLine(config.RelationList);
 
     for (let i = smStartIndex; i < smStartIndex + smCount; i++) {
         console.log(linesRelation[i]);
@@ -62,12 +64,12 @@ async function main() {
         console.log("msgValueTemp", msgValueTemp);
 
 
-        let txHash = await doStake(split(linesRelation[i])[0],
+        let txHash = await doStake(osmTools.split(linesRelation[i])[0],
             config.smgScAddr,
             msgValueTemp,
             grpId,
-            split(linesRelation[i])[2],
-            split(linesRelation[i])[3]);
+            osmTools.split(linesRelation[i])[2],
+            osmTools.split(linesRelation[i])[3]);
 
         console.log("============txHash", txHash);
     }
@@ -85,45 +87,6 @@ async function doStake(walletAddr, smgAddr, msgValue, grpId, wkPk, enodeId) {
             reject(err);
         }
     })
-}
-
-
-function stringTobytes32(name) {
-    let b = Buffer.alloc(32)
-    b.write(name, 32 - name.length, 'utf8');
-    let id = '0x' + b.toString('hex');
-    return id
-}
-
-
-function getGrpIdByString(str) {
-    return stringTobytes32(str);
-}
-
-async function processLineByLine(fileName) {
-    return new Promise((resolve, reject) => {
-
-        try {
-            let lines = [];
-            const rl = readline.createInterface({
-                input: fs.createReadStream(fileName),
-                crlfDelay: Infinity
-            });
-
-            rl.on('line', (line) => {
-                lines.push(line)
-            });
-            rl.on('close', () => {
-                resolve(lines);
-            });
-        } catch (err) {
-            reject(err);
-        }
-    });
-}
-
-function split(line, sep = '\t') {
-    return line.split(sep);
 }
 
 main();

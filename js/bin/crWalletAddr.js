@@ -1,10 +1,9 @@
-const BigInteger = require('bigi');
 const fs = require('fs');
 const path = require('path');
 
-const ecurve = require('ecurve');
-const ecparams = ecurve.getCurveByName('secp256k1');
 const wanutil = require('wanchain-util');
+
+const osmTools = require('./util/osmTools');
 
 const optimist = require('optimist');
 let argv = optimist
@@ -35,13 +34,13 @@ function main() {
     for (let i = 0; i < nc; i++) {
         let ret = web3.eth.accounts.create();
         let prv = ret.privateKey;
-        let prvb = Buffer.from(removePrefix(prv), 'hex');
+        let prvb = Buffer.from(osmTools.removePrefix(prv), 'hex');
 
-        let pkb = baseScarMulti(prvb);
+        let pkb = osmTools.baseScarMulti(prvb);
         let pkb1 = ethUtil.privateToPublic(prvb);
 
-        let pk = bufferToHexString(pkb);
-        let pk1 = bufferToHexString(pkb1);
+        let pk = osmTools.bufferToHexString(pkb);
+        let pk1 = osmTools.bufferToHexString(pkb1);
         console.log(prv, pk, pk1);
 
         let keystore = web3.eth.accounts.encrypt(prv, config.password);
@@ -63,29 +62,6 @@ function main() {
     }
 
     console.log("===============done=================\n");
-}
-
-
-function removePrefix(hexStr) {
-    if (hexStr.length < 2) throw ErrInvalidHexString;
-    if (hexStr.substring(0, 2) === "0x" || hexStr.substring(0, 2) === "0X") {
-        return hexStr.substring(2);
-    } else {
-        return hexStr;
-    }
-}
-
-function bufferToHexString(buff) {
-    return "0x" + buff.toString('hex');
-}
-
-
-function baseScarMulti(sk) {
-    let curvePt = ecparams.G.multiply(BigInteger.fromBuffer(sk));
-    let ret = curvePt.getEncoded(false);
-    let str = ret.toString('hex');
-    str = str.slice(2);
-    return Buffer.from(str, 'hex');
 }
 
 main();

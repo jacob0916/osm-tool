@@ -1,7 +1,8 @@
 const Web3 = require('web3');
 const fs = require('fs');
-const readline = require('readline');
 const path = require('path');
+
+const osmTools = require('./util/osmTools');
 
 const optimist = require('optimist');
 let argv = optimist
@@ -27,11 +28,11 @@ async function main() {
 async function doGather() {
     // waddr, wkaddr, wkpk, enodeId
     let ret = [];
-    let linesRelation = await processLineByLine(config.gatherKsList);
+    let linesRelation = await osmTools.processLineByLine(config.gatherKsList);
 
     for (let i = 0; i < linesRelation.length; i++) {
         console.log(linesRelation[i]);
-        let tokens = split(linesRelation[i]);
+        let tokens = osmTools.split(linesRelation[i]);
         let addr = tokens[tokens.length - 1];
         let fullKsPath = path.join(__dirname, linesRelation[i]);
         console.log(fullKsPath);
@@ -48,32 +49,6 @@ async function doGather() {
 
 async function transfer(from, to, value, ksFile) {
     await sendWan(from, to, value, ksFile);
-}
-
-async function processLineByLine(fileName) {
-    return new Promise((resolve, reject) => {
-
-        try {
-            let lines = [];
-            const rl = readline.createInterface({
-                input: fs.createReadStream(fileName),
-                crlfDelay: Infinity
-            });
-
-            rl.on('line', (line) => {
-                lines.push(line)
-            });
-            rl.on('close', () => {
-                resolve(lines);
-            });
-        } catch (err) {
-            reject(err);
-        }
-    });
-}
-
-function split(line, sep = '\/') {
-    return line.split(sep);
 }
 
 main();

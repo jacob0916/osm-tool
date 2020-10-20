@@ -1,9 +1,4 @@
-function stringTobytes32(name) {
-    let b = Buffer.alloc(32)
-    b.write(name, 32 - name.length, 'utf8')
-    let id = '0x' + b.toString('hex')
-    return id
-}
+const osmTools = require('./util/osmTools');
 
 const optimist = require('optimist');
 let argv = optimist
@@ -13,7 +8,7 @@ global.grpName = argv["grpName"];
 
 
 function getGrpIdByString(str) {
-    return stringTobytes32(str);
+    return osmTools.stringTobytes32(str);
 }
 
 function main() {

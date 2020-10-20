@@ -1,9 +1,5 @@
 const Web3 = require('web3');
-const net = require('net');
-const fs = require('fs');
-const readline = require('readline');
-
-
+const osmTools = require('./util/osmTools');
 const pu = require('promisefy-util');
 
 const optimist = require('optimist');
@@ -44,45 +40,20 @@ async function main() {
 async function doAlloc() {
     // waddr, wkaddr, wkpk, enodeId
     let ret = [];
-    let linesRelation = await processLineByLine(config.RelationList);
+    let linesRelation = await osmTools.processLineByLine(config.RelationList);
 
     for (let i = 0; i < linesRelation.length; i++) {
         //for (let i = 0; i < 1; i++) {
         if (parseInt(i) == 0) {
-            await alloc(split(linesRelation[i])[0], config.allocValue);
+            await alloc(osmTools.split(linesRelation[i])[0], config.allocValue);
         } else {
-            await alloc(split(linesRelation[i])[0], config.allocValue);
+            await alloc(osmTools.split(linesRelation[i])[0], config.allocValue);
         }
-        await alloc(split(linesRelation[i])[1], config.allocWKValue);
+        await alloc(osmTools.split(linesRelation[i])[1], config.allocWKValue);
     }
 
     console.log("========================done=========================");
 }
 
-async function processLineByLine(fileName) {
-    return new Promise((resolve, reject) => {
-
-        try {
-            let lines = [];
-            const rl = readline.createInterface({
-                input: fs.createReadStream(fileName),
-                crlfDelay: Infinity
-            });
-
-            rl.on('line', (line) => {
-                lines.push(line)
-            });
-            rl.on('close', () => {
-                resolve(lines);
-            });
-        } catch (err) {
-            reject(err);
-        }
-    });
-}
-
-function split(line, sep = '\t') {
-    return line.split(sep);
-}
 
 main();
