@@ -1,10 +1,8 @@
 const BigInteger = require('bigi');
 const fs = require('fs');
-const path = require('path');
 
 const ecurve = require('ecurve');
 const ecparams = ecurve.getCurveByName('secp256k1');
-const wanutil = require('wanchain-util');
 
 const optimist = require('optimist');
 let argv = optimist
@@ -19,13 +17,12 @@ global.network = argv["network"];
 const config = require('../cfg/config');
 
 const Web3 = require('web3');
-const net = require('net');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 const ethUtil = require("ethereumjs-util");
 
 function main() {
     let nc = argv["nc"];
-    global.network=argv["network"];
+    global.network = argv["network"];
     let fileContent = '';
     for (let i = 0; i < nc; i++) {
         let ret = web3.eth.accounts.create();

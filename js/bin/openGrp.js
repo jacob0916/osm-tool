@@ -49,7 +49,7 @@ let argv = optimist
     .describe('nt', 'neogationTimeout uint:day')            //day
 
     .describe('rd', 'regDur uint:day')                      //day
-    .describe('wt','worktime "2020/10/19-12:00:00"')        //string
+    .describe('wt', 'worktime "2020/10/19-12:00:00"')        //string
     .describe('tt', 'totalTime uint:day')                    //day
 
     .describe('tn', 'total nodes')
@@ -113,7 +113,7 @@ async function main() {
         neogationTimeout: argv.nt,      //day
 
         regDur: argv.rd,                //day
-        workTime:argv.wt,               // 2020/10/19-14:00:00
+        workTime: argv.wt,               // 2020/10/19-14:00:00
         totalTime: argv.tt,             //day
 
 
@@ -126,7 +126,7 @@ async function main() {
         dstCurve: argv.dcrv,
         minStakeIn: argv.ms,
         minDelegateIn: argv.md,
-        minPartIn:argv.mp,
+        minPartIn: argv.mp,
         delegateFee: argv.df,
     };
     let wlStartIndex = argv.wlStart;
@@ -146,11 +146,11 @@ async function main() {
     }
 
     updateSmIn(smIn);
-    console.log("smIn(update)",smIn);
+    console.log("smIn(update)", smIn);
     await doOpenGrp(smIn, wlWkAddr, wlWallectAddr);
 
     let grpId = smIn.grpId;
-    await doSetPeriod(grpId,smIn.polyCMTimeout,smIn.defaultTimeout,smIn.neogationTimeout);
+    await doSetPeriod(grpId, smIn.polyCMTimeout, smIn.defaultTimeout, smIn.neogationTimeout);
     console.log("========================done=========================");
 }
 
@@ -176,7 +176,7 @@ function updateSmIn(smIn) {
     regDay = parseInt(smIn.regDur);
 
     let polyCommitTimeoutDay = parseInt(smIn.polyCMTimeout);
-    console.log("gpkDay",polyCommitTimeoutDay);
+    console.log("gpkDay", polyCommitTimeoutDay);
 
     // workTime : should input by such as "2019/10/19-12:00:00"
     // smIn.workTime = parseInt(Date.now() / 1000/86400 + regDay )*86400 + 3600*4;
@@ -188,48 +188,49 @@ function updateSmIn(smIn) {
     smIn.grpId = getGrpIdByString(smIn.grpId);
     smIn.preGrpId = getGrpIdByString(smIn.preGrpId);
 
-    smIn.polyCMTimeout = parseInt(smIn.polyCMTimeout)*86400;
-    smIn.defaultTimeout = parseInt(smIn.defaultTimeout)*86400;
-    smIn.neogationTimeout = parseInt(smIn.neogationTimeout)*86400;
+    smIn.polyCMTimeout = parseInt(smIn.polyCMTimeout) * 86400;
+    smIn.defaultTimeout = parseInt(smIn.defaultTimeout) * 86400;
+    smIn.neogationTimeout = parseInt(smIn.neogationTimeout) * 86400;
 
-    smIn.regDur = parseInt(smIn.regDur)*86400;
-    smIn.totalTime = parseInt(smIn.totalTime)*86400;
+    smIn.regDur = parseInt(smIn.regDur) * 86400;
+    smIn.totalTime = parseInt(smIn.totalTime) * 86400;
 
 }
 
 // "2019/10/19-12:00:00"
-function getTimeStampByStr(dateTimeStr){
-    let  errInvalidDateTimeStr = new Error("invalid date and time string ,should like 2019/10/19-12:00:00");
+function getTimeStampByStr(dateTimeStr) {
+    let errInvalidDateTimeStr = new Error("invalid date and time string ,should like 2019/10/19-12:00:00");
 
-        let  t = dateTimeStr.split("-");
-        if(t.length != 2){
-            console.log("invalid date and time string ,should like 2019/10/19-12:00:00");
-            throw errInvalidDateTimeStr;
-        }else{
-            let [year,month,day] = t[0].split("/");
-            let [h,minute,second] = t[1].split(":");
+    let t = dateTimeStr.split("-");
+    if (t.length != 2) {
+        console.log("invalid date and time string ,should like 2019/10/19-12:00:00");
+        throw errInvalidDateTimeStr;
+    } else {
+        let [year, month, day] = t[0].split("/");
+        let [h, minute, second] = t[1].split(":");
 
-            if(parseInt(t[0].split("/").length) != 3 || t[1].split(":").length != 3){
-                throw errInvalidDateTimeStr
-            }
-            let  myDate= new Date(year,parseInt(month)-1,day,h,minute,second);
-            return  myDate.getTime()/1000;
+        if (parseInt(t[0].split("/").length) != 3 || t[1].split(":").length != 3) {
+            throw errInvalidDateTimeStr
         }
+        let myDate = new Date(year, parseInt(month) - 1, day, h, minute, second);
+        return myDate.getTime() / 1000;
+    }
 }
+
 async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
     return new Promise(async (resolve, reject) => {
         try {
             let data = await buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr);
-            console.log("data of doOpenGrp",data);
+            console.log("data of doOpenGrp", data);
             let txHash = '';
 
 
             txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
 
-            console.log("doOpenGrp txHash",txHash);
+            console.log("doOpenGrp txHash", txHash);
             resolve(txHash);
         } catch (err) {
-            console.log("doOpenGrp error",err.message);
+            console.log("doOpenGrp error", err.message);
             reject(err);
         }
     });
@@ -239,16 +240,16 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
 async function doSetPeriod(grpId, polyCommitTimeout, defaultTimeout, neogationTimeout) {
     return new Promise(async (resolve, reject) => {
         try {
-            let data = await buildSetPeriod(grpId, polyCommitTimeout, defaultTimeout,neogationTimeout);
-            console.log("data of buildSetPeriod",data);
+            let data = await buildSetPeriod(grpId, polyCommitTimeout, defaultTimeout, neogationTimeout);
+            console.log("data of buildSetPeriod", data);
             let txHash = '';
 
             txHash = await sendTx(config.adminAddr, config.gpkScAddr, 0x0, data);
 
-            console.log("doSetPeriod txHash",txHash);
+            console.log("doSetPeriod txHash", txHash);
             resolve(txHash);
         } catch (err) {
-            console.log("doSetPeriod error",err.message);
+            console.log("doSetPeriod error", err.message);
             reject(err);
         }
     });

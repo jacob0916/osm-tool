@@ -16,7 +16,7 @@ function getGrpIdByString(str) {
     return stringTobytes32(str);
 }
 
-function main(){
+function main() {
     console.log(getGrpIdByString(global.grpName));
 };
 main();

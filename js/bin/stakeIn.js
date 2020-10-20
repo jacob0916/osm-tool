@@ -11,7 +11,6 @@ smCount
  */
 
 const Web3 = require('web3');
-const net = require('net');
 const fs = require('fs');
 const readline = require('readline');
 const BigNumber = require('bignumber.js');
@@ -45,28 +44,22 @@ async function main() {
     let smStartIndex = argv.smsi;
     let smCount = argv.smcnt;
     //let msgValue = web3.utils.toBN(argv.amount);
-    console.log("argv.amount",argv.amount);
+    console.log("argv.amount", argv.amount);
     let amountBig;
     amountBig = new BigNumber(argv.amount);
-    console.log("amountBig",amountBig.toString(10));
+    console.log("amountBig", amountBig.toString(10));
     // waddr, wkaddr, wkpk, enodeId
-    let ret = [];
     let linesRelation = await processLineByLine(config.RelationList);
 
     for (let i = smStartIndex; i < smStartIndex + smCount; i++) {
         console.log(linesRelation[i]);
         let msgValueTempBig;
-        // if(parseInt(i) == 0){
-        //     msgValueTemp = web3.utils.toBN(argv.amount).div(web3.utils.toBN(2)).sub(web3.utils.toBN(i));
-        // }else{
-        //     msgValueTemp = web3.utils.toBN(argv.amount).div(web3.utils.toBN(20)).sub(web3.utils.toBN(i));
-        // }
 
-        msgValueTempBig = amountBig.minus(new BigNumber(i*100));
+        msgValueTempBig = amountBig.minus(new BigNumber(i * 100));
         let msgValueTemp;
         msgValueTemp = msgValueTempBig.toString(10);
 
-        console.log("msgValueTemp",msgValueTemp);
+        console.log("msgValueTemp", msgValueTemp);
 
 
         let txHash = await doStake(split(linesRelation[i])[0],
@@ -76,7 +69,7 @@ async function main() {
             split(linesRelation[i])[2],
             split(linesRelation[i])[3]);
 
-        console.log("============txHash",txHash);
+        console.log("============txHash", txHash);
     }
     console.log("========================done=========================");
 

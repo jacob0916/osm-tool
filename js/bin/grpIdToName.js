@@ -14,15 +14,27 @@ function byte32ToString(name) {
 }
 
 
-let  hex_change = function(v){
+let hex_change = function (v) {
     let res;
-    switch(v){
-        case "a": res = 10;break;
-        case "b": res = 11;break;
-        case "c": res = 12;break;
-        case "d": res = 13;break;
-        case "e": res = 14;break;
-        case "f": res = 15;break;
+    switch (v) {
+        case "a":
+            res = 10;
+            break;
+        case "b":
+            res = 11;
+            break;
+        case "c":
+            res = 12;
+            break;
+        case "d":
+            res = 13;
+            break;
+        case "e":
+            res = 14;
+            break;
+        case "f":
+            res = 15;
+            break;
         case "1":
         case "2":
         case "3":
@@ -31,41 +43,37 @@ let  hex_change = function(v){
         case "6":
         case "7":
         case "8":
-        case "9": res = Number(v);break;
-        default: res = 0;break;
+        case "9":
+            res = Number(v);
+            break;
+        default:
+            res = 0;
+            break;
     }
     return res;
 }
 
 function byte32ToString(grpIdStr) {
     let grpId;
-    if(grpIdStr.substring(0,2).toLowerCase() == '0x'){
+    if (grpIdStr.substring(0, 2).toLowerCase() == '0x') {
         grpId = grpIdStr.substring(2);
-        console.log("grpId",grpId);
+        console.log("grpId", grpId);
     }
     let count = grpId.length / 2;
-    if(grpId.length % 2){
+    if (grpId.length % 2) {
         throw new Error("invalid string");
     }
     let ret = '';
-    for(let i = 0; i< count; i++){
+    for (let i = 0; i < count; i++) {
         let code = 0;
-        // console.log("grpId[2*%d]:%s",i,hex_change(grpId[2*i]));
-        // console.log("grpId[2*%d+1]:%s",i,hex_change(grpId[2*i+1]));
-        code += Number(hex_change(grpId[2*i]))*16;
-        code += Number(hex_change(grpId[2*i+1]));
-
-        //console.log("code:",parseInt(code));
-        if(!!code){
-            ret += ''+String.fromCharCode(code);
+        code += Number(hex_change(grpId[2 * i])) * 16;
+        code += Number(hex_change(grpId[2 * i + 1]));
+        if (!!code) {
+            ret += '' + String.fromCharCode(code);
         }
     }
 
     return ret;
-    // let b = Buffer.alloc(32)
-    // b.write(name, 32 - name.length, 'utf8')
-    // let id = '0x' + b.toString('hex')
-    // return id
 }
 
 const optimist = require('optimist');
@@ -80,10 +88,10 @@ function getGrpIdByString(hexStr) {
     return byte32ToString(hexStr);
 }
 
-function main(){
+function main() {
     //console.log("argv",argv);
-    console.log("grpIdStr:",global.grpIdStr);
-    console.log("grpName:",getGrpIdByString(global.grpIdStr));
+    console.log("grpIdStr:", global.grpIdStr);
+    console.log("grpName:", getGrpIdByString(global.grpIdStr));
 };
 main();
 

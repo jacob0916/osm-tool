@@ -22,14 +22,12 @@ global.network = argv["network"];
 const config = require('../cfg/config');
 
 const Web3 = require('web3');
-const net = require('net');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 const ethUtil = require("ethereumjs-util");
 
 function main() {
-    // --nc 20 --wallet
     let nc = argv["nc"];
-    global.network=argv["network"];
+    global.network = argv["network"];
     let wallet = argv["wallet"];
 
     console.log(wallet);

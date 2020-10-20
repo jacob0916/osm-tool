@@ -1,11 +1,7 @@
 const Web3 = require('web3');
-const net = require('net');
 const fs = require('fs');
 const readline = require('readline');
 const path = require('path');
-
-
-const pu = require('promisefy-util');
 
 const optimist = require('optimist');
 let argv = optimist
@@ -36,22 +32,22 @@ async function doGather() {
     for (let i = 0; i < linesRelation.length; i++) {
         console.log(linesRelation[i]);
         let tokens = split(linesRelation[i]);
-        let addr = tokens[tokens.length-1];
-        let fullKsPath = path.join(__dirname,linesRelation[i]);
+        let addr = tokens[tokens.length - 1];
+        let fullKsPath = path.join(__dirname, linesRelation[i]);
         console.log(fullKsPath);
         let balanceWei = await web3.eth.getBalance(addr);
-        console.log(addr,"balance",web3.utils.fromWei(balanceWei));
+        console.log(addr, "balance", web3.utils.fromWei(balanceWei));
 
         let leftBn = web3.utils.toBN(balanceWei).sub(web3.utils.toBN(config.gasPriceTransfer).mul(web3.utils.toBN(config.gasLimitTransfer)));
-        if(addr != config.ownerAddr && addr != config.adminAddr){
-            await transfer(addr,config.ownerAddr, leftBn, fullKsPath);
+        if (addr != config.ownerAddr && addr != config.adminAddr) {
+            await transfer(addr, config.ownerAddr, leftBn, fullKsPath);
         }
     }
     console.log("========================done=========================");
 }
 
-async function transfer(from,to,value, ksFile) {
-    await sendWan(from, to, value,ksFile);
+async function transfer(from, to, value, ksFile) {
+    await sendWan(from, to, value, ksFile);
 }
 
 async function processLineByLine(fileName) {

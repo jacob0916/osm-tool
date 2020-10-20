@@ -11,10 +11,8 @@ smCount
  */
 
 const Web3 = require('web3');
-const net = require('net');
 const fs = require('fs');
 const readline = require('readline');
-const BigNumber = require('bignumber.js');
 
 const optimist = require('optimist');
 let argv = optimist
@@ -46,10 +44,10 @@ async function main() {
 
     for (let i = smStartIndex; i < smStartIndex + smCount; i++) {
         //console.log(linesRelation[i]);
-        console.log("walletAddr",split(linesRelation[i])[0],"wkAddr:",split(linesRelation[i])[1]);
-        let txHash = await doStakeOut(split(linesRelation[i])[0],config.smgScAddr,split(linesRelation[i])[1]);
+        console.log("walletAddr", split(linesRelation[i])[0], "wkAddr:", split(linesRelation[i])[1]);
+        let txHash = await doStakeOut(split(linesRelation[i])[0], config.smgScAddr, split(linesRelation[i])[1]);
 
-        console.log("============txHash",txHash);
+        console.log("============txHash", txHash);
     }
     console.log("========================done=========================");
 
@@ -58,7 +56,7 @@ async function main() {
 async function doStakeOut(walletAddr, smgAddr, wkAddr) {
     return new Promise(async (resolve, reject) => {
         try {
-            let msgValue=0x0;
+            let msgValue = 0x0;
             let data = await  buildStakeOutData(wkAddr);
             let txHash = await sendTx(walletAddr, smgAddr, msgValue, data);
             resolve(txHash);

@@ -155,22 +155,22 @@ function buildOpenGrpData(smIn, wlWkAddr, wlWalletAddr) {
     let now = parseInt(Date.now() / 1000);
     let c = getContract(config.smgAbi, config.smgScAddr);
 
-    console.log("msInput",smIn.minStakeIn);
+    console.log("msInput", smIn.minStakeIn);
 
     let msBig = new BigNubmer(smIn.minStakeIn);
     let mdBig = new BigNubmer(smIn.minDelegateIn);
     let mpBig = new BigNubmer(smIn.minPartIn);
 
-    let ms,md,mp;
+    let ms, md, mp;
 
     ms = msBig.toString(10);
     md = mdBig.toString(10);
     mp = mpBig.toString(10);
 
     console.log("========================");
-    console.log("ms",ms);
-    console.log("md",md);
-    console.log("mp",mp);
+    console.log("ms", ms);
+    console.log("md", md);
+    console.log("mp", mp);
 
     return c.methods.storemanGroupRegisterStart(
         [smIn.grpId, smIn.preGrpId, smIn.workTime, smIn.totalTime, smIn.regDur, smIn.totalNodes, smIn.thresholds,
@@ -192,9 +192,9 @@ function buildStakeOutData(wkAddr) {
 }
 
 //setPeriod('0x000000000000000000000000000000000000000000746573746e65745f303032',259200,86400,259200,{from:'0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e',gasLimit:1e9,gasPrice:1e12})
-function buildSetPeriod(grpId, ployCommitTimeout, defaultTimeout, neogationTimeout){
+function buildSetPeriod(grpId, ployCommitTimeout, defaultTimeout, neogationTimeout) {
     let c = getContract(config.gpkAbi, config.gpkScAddr);
-    return c.methods.setPeriod(grpId,ployCommitTimeout,defaultTimeout,neogationTimeout).encodeABI();
+    return c.methods.setPeriod(grpId, ployCommitTimeout, defaultTimeout, neogationTimeout).encodeABI();
 }
 
 module.exports = {

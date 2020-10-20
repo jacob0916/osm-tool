@@ -47,11 +47,10 @@ async function doAlloc() {
     let linesRelation = await processLineByLine(config.RelationList);
 
     for (let i = 0; i < linesRelation.length; i++) {
-    //for (let i = 0; i < 1; i++) {
-        if(parseInt(i) == 0){
+        //for (let i = 0; i < 1; i++) {
+        if (parseInt(i) == 0) {
             await alloc(split(linesRelation[i])[0], config.allocValue);
-        }else{
-            //await alloc(split(linesRelation[i])[0], parseInt(config.allocValue/10));
+        } else {
             await alloc(split(linesRelation[i])[0], config.allocValue);
         }
         await alloc(split(linesRelation[i])[1], config.allocWKValue);

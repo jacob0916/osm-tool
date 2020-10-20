@@ -1,13 +1,10 @@
 const Web3 = require('web3');
-const net = require('net');
 const readline = require('readline');
 const ethUtil = require("ethereumjs-util");
 const wanutil = require('wanchain-util');
 
 const fs = require('fs');
 const path = require('path');
-
-const pu = require('promisefy-util');
 
 const optimist = require('optimist');
 let argv = optimist
@@ -23,8 +20,8 @@ global.network = argv["network"];
 const config = require('../cfg/config');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
-async function createGPKKs(prv,ksFileName,gpkStr) {
-    console.log("ksFilename",ksFileName);
+async function createGPKKs(prv, ksFileName, gpkStr) {
+    console.log("ksFilename", ksFileName);
     let prvb = Buffer.from(removePrefix(prv), 'hex');
     let pkb1 = ethUtil.privateToPublic(prvb);
     let pk1 = bufferToHexString(pkb1);
@@ -39,7 +36,7 @@ async function createGPKKs(prv,ksFileName,gpkStr) {
 }
 
 async function main() {
-    console.log("gpk:",argv["gpk"].toString());
+    console.log("gpk:", argv["gpk"].toString());
     await doCreateKs();
 }
 
@@ -61,7 +58,7 @@ async function doCreateKs() {
     let skList = await processLineByLine(config.gskList);
 
     for (let i = 0; i < skList.length; i++) {
-        await createGPKKs(split(skList[i])[0], (argv["gpk"]==undefined? '':argv["gpk"])+ '_'+(parseInt(i)<10 ? '0'+i.toString(10):i.toString()),argv["gpk"]);
+        await createGPKKs(split(skList[i])[0], (argv["gpk"] == undefined ? '' : argv["gpk"]) + '_' + (parseInt(i) < 10 ? '0' + i.toString(10) : i.toString()), argv["gpk"]);
     }
 
     console.log("========================done=========================");
