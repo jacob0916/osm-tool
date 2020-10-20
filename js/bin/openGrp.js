@@ -199,22 +199,22 @@ function updateSmIn(smIn) {
 
 // "2019/10/19-12:00:00"
 function getTimeStampByStr(dateTimeStr){
-    try{
+    let  errInvalidDateTimeStr = new Error("invalid date and time string ,should like 2019/10/19-12:00:00");
+
         let  t = dateTimeStr.split("-");
         if(t.length != 2){
             console.log("invalid date and time string ,should like 2019/10/19-12:00:00");
-            return 0;
+            throw errInvalidDateTimeStr;
         }else{
             let [year,month,day] = t[0].split("/");
             let [h,minute,second] = t[1].split(":");
 
-            //let  myDate= new Date(Date.UTC(year,parseInt(month)-1,day,h,minute,second));
+            if(parseInt(t[0].split("/").length) != 3 || t[1].split(":").length != 3){
+                throw errInvalidDateTimeStr
+            }
             let  myDate= new Date(year,parseInt(month)-1,day,h,minute,second);
             return  myDate.getTime()/1000;
         }
-    }catch(e){
-           console.log("error in getTimeStampBystr error",e);
-    }
 }
 async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
     return new Promise(async (resolve, reject) => {
@@ -224,7 +224,7 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
             let txHash = '';
 
 
-            //txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+            txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
 
             console.log("doOpenGrp txHash",txHash);
             resolve(txHash);
@@ -243,7 +243,7 @@ async function doSetPeriod(grpId, polyCommitTimeout, defaultTimeout, neogationTi
             console.log("data of buildSetPeriod",data);
             let txHash = '';
 
-            //txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+            txHash = await sendTx(config.adminAddr, config.gpkScAddr, 0x0, data);
 
             console.log("doSetPeriod txHash",txHash);
             resolve(txHash);

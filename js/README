@@ -9,16 +9,16 @@ cmd:
 
 step1:
     desc: build nodekey and enodeId
-    cmd: node crEnodeId.js --nc 60  --network testnet
+    cmd: node crEnodeId.js --network testnet --nc 11
 
 
 step2:
     desc: build working addr and keystore
-    cmd:   node crWalletAddr.js --nc 60 --network testnet
+    cmd:   node crWalletAddr.js --network testnet --nc 11
 
 step3:
     desc: build wallet addr and keystore
-    cmd:   node crWalletAddr.js --nc 60 --wallet --network testnet
+    cmd:   node crWalletAddr.js --network testnet --nc 11 --wallet
 
 step4:
         # wallet address  and keystore file name
@@ -36,19 +36,10 @@ step5:
 step6:
   desc: openGroup
 
-  5hours:18000
-  0.5day: 43200
-  1day: 86400
-  2day: 172800
-  3day: 259200
-  4day: 345600
-  5day: 432000
-  6day: 518400
-  7day: 604800
+  cmd:
+        node openGrp.js --network testnet --gid 'Aries_002' --pgid '' --pct 2 --dt 1 --nt 1  --rd 2  --wt '2020/10/24-12:00:00' --tt 7 --tn 21 --th 15 --srcid '2153201998'   --dstid '2147483708'   --scrv  1  --dcrv 1   --ms 10000e18 --md 100e18 --mp 10000e18 --df 1000   --wlStart 0  --wlCount  11
 
-  cmd:  node openGrp.js --network testnet --rd 86400 --gd 86400  --hd 345600 --tn 21 --th 17 --gid 'test-1' --pgid '' --srcid '2153201998' --dstid '2147483708' --scrv  1  --dcrv 1 --ms 2000 --md 100 --mp 50 --df 100 --wlStart 0 --wlCount  5
-
-        node openGrp.js --network testnet --rd 1200 --gd 1200   --hd 345600 --tn 21 --th 17 --gid 'FE' --pgid '' --srcid '2153201998' --dstid '2147483708' --scrv  1  --dcrv 1 --ms 2e18 --md 1e18 --mp 1e18 --df 100 --wlStart 0 --wlCount  5
+        node openGrp.js --network testnet --gid 'testnet_006' --pgid 'testnet_005' --pct 1 --dt 1 --nt 1  --rd 2  --wt '2020/10/23-12:00:00' --tt 7 --tn 21 --th 15 --srcid '2153201998'   --dstid '2147483708'   --scrv  1  --dcrv 1   --ms 10000e18 --md 100e18 --mp 10000e18 --df 1000   --wlStart 0  --wlCount  11
 
 
 step7:
@@ -57,4 +48,14 @@ step7:
 
 step8:
      desc: stake out
-     cmd:  node stakeOut.js --network testnet --gid 'testnet_001' --smsi 0 --smcnt 25
+     cmd:  node stakeOut.js --network testnet --gid 'Aries_001' --smsi 0 --smcnt 11
+
+
+Others command:
+
+        gather wan:
+            # build keystore file list from which we can gather the wan.
+            1.  ./getGatherKs.sh
+
+            # gather the wan to owner address.
+            2. node gather.js --network testnet

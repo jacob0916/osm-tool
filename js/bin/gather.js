@@ -9,7 +9,7 @@ const pu = require('promisefy-util');
 
 const optimist = require('optimist');
 let argv = optimist
-    .usage("Usage: $0  --nc [index] --wallet [true]")
+    .usage("Usage: $0  --network")
     .alias('h', 'help')
     .describe('network', 'network')
     .default('network', 'internal')
