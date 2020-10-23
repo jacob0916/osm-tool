@@ -13,6 +13,17 @@ function stringTobytes32(name) {
     return id
 }
 
+const GroupStatus = {
+    none: 0,
+    initial: 1,
+    curveSeted: 2,
+    failed: 3,
+    selected: 4,
+    ready: 5,
+    unregistered: 6,
+    dismissed: 7
+}
+
 function byte32ToString(name) {
     let b = Buffer.alloc(32)
     b.write(name, 32 - name.length, 'utf8')
@@ -184,7 +195,7 @@ function PrefixInteger(num, length) {
 }
 
 // testnet_001
-function getNextGrpName(curGrpName,seperator){
+function getNextGrpName(curGrpName,seperator='_'){
     let [prefix, number] = curGrpName.toString().split(seperator);
     let nextNumber = parseInt(number) + 1;
 
@@ -193,7 +204,7 @@ function getNextGrpName(curGrpName,seperator){
     return ret;
 }
 
-function getPreGrpName(curGrpName,seperator){
+function getPreGrpName(curGrpName,seperator='_'){
     let [prefix, number] = curGrpName.toString().split(seperator);
     let nextNumber = parseInt(number) - 1;
 
@@ -206,19 +217,38 @@ function getPreGrpName(curGrpName,seperator){
     return ret;
 }
 //2020/10/23-12:00:00
-function getNextWorkTime(curWorkTime, duringDay){
+// sec=true  second
+// sec=false day
+function getNextWorkTime(curWorkTime, during, sec=false){
     let curTS = getTimeStampByStr(curWorkTime);
-    curTS += parseInt(duringDay) * 86400;
+    if(sec){
+        curTS += parseInt(during);
+    }else{
+        curTS += parseInt(during) * 86400;
+    }
+
     return getStrByTimeStamp(curTS);
 
 }
 //2020/10/23-12:00:00
-function getPreWorkTime(curWorkTime, duringDay){
+function getPreWorkTime(curWorkTime, during,sec=false){
     let curTS = getTimeStampByStr(curWorkTime);
-    curTS -= parseInt(duringDay * 86400);
+    if(sec){
+        curTS -= parseInt(during);
+    }else{
+        curTS -= parseInt(during * 86400);
+    }
 
     return getStrByTimeStamp(curTS);
 }
+
+async function sleep(time) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, time);
+    });
+};
 
 module.exports = {
     byte32ToString,
@@ -234,4 +264,6 @@ module.exports = {
     getPreGrpName,
     getNextWorkTime,
     getPreWorkTime,
+    GroupStatus,
+    sleep,
 }

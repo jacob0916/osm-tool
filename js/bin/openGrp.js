@@ -33,7 +33,10 @@ let argv = optimist
     .describe('wlStart', 'White start index')
     .describe('wlCount', 'White count')
 
+    .describe('sec', 'second')
+
     .string('wt')
+    .boolean('sec')
     .default('tn', 21)
     .default('th', 17)
     .default('srcid', '2153201998')
@@ -49,6 +52,7 @@ let argv = optimist
     .default('network', 'internal')
     .argv;
 global.network = argv["network"];
+global.sec = argv["sec"];
 
 const config = require('../cfg/config');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
@@ -94,18 +98,57 @@ async function main() {
     let linesRelation = await osmTools.processLineByLine(config.RelationList);
     let wlWallectAddr = [];
     let wlWkAddr = [];
+
+    if (parseInt(linesRelation.length) < (parseInt(wlStartIndex) + parseInt(wlCount))) {
+        throw new Error("Relation file content is too less");
+    }
+
     for (let i = wlStartIndex; i < wlStartIndex + wlCount; i++) {
-        console.log(linesRelation[i]);
-        wlWallectAddr.push(osmTools.split(linesRelation[i])[0]);
-        wlWkAddr.push(osmTools.split(linesRelation[i])[1]);
+        //console.log("Befor split",linesRelation[i]);
+        let ret = osmTools.split(linesRelation[i]);
+        //console.log("After split",ret);
+
+        // wlWallectAddr.push(osmTools.split(linesRelation[i])[0]);
+        // wlWkAddr.push(osmTools.split(linesRelation[i])[1]);
+
+        wlWallectAddr.push(ret[0]);
+        wlWkAddr.push(ret[1]);
     }
 
     updateSmIn(smIn);
     console.log("smIn(update)", smIn);
-    await doOpenGrp(smIn, wlWkAddr, wlWallectAddr);
+    let txHash = await doOpenGrp(smIn, wlWkAddr, wlWallectAddr);
+    let receipt = null;
+
+    if (txHash.length) {
+        while (receipt == null) {
+            receipt = await getTxReceipt(txHash);
+            await osmTools.sleep(1000);
+        }
+        if (receipt.status) {
+            console.log("doOpenGrp tx %s successfully", txHash);
+        } else {
+            console.log("doOpenGrp tx %s fail", txHash);
+        }
+    }
+
 
     let grpId = smIn.grpId;
-    await doSetPeriod(grpId, smIn.polyCMTimeout, smIn.defaultTimeout, smIn.neogationTimeout);
+    txHash = await doSetPeriod(grpId, smIn.polyCMTimeout, smIn.defaultTimeout, smIn.neogationTimeout);
+
+    if (txHash.length) {
+        receipt = null;
+        while (receipt == null) {
+            receipt = await getTxReceipt(txHash);
+            await osmTools.sleep(1000);
+        }
+        if (receipt.status) {
+            console.log("doSetPeriod tx %s successfully", txHash);
+        } else {
+            console.log("doSetPeriod tx %s fail", txHash);
+        }
+    }
+
     console.log("========================done=========================");
 }
 
@@ -126,13 +169,21 @@ function updateSmIn(smIn) {
     smIn.grpId = osmTools.getGrpIdByString(smIn.grpId);
     smIn.preGrpId = osmTools.getGrpIdByString(smIn.preGrpId);
 
-    smIn.polyCMTimeout = parseInt(smIn.polyCMTimeout) * 86400;
-    smIn.defaultTimeout = parseInt(smIn.defaultTimeout) * 86400;
-    smIn.neogationTimeout = parseInt(smIn.neogationTimeout) * 86400;
+    if (!!global.sec) {
+        smIn.polyCMTimeout = parseInt(smIn.polyCMTimeout);
+        smIn.defaultTimeout = parseInt(smIn.defaultTimeout);
+        smIn.neogationTimeout = parseInt(smIn.neogationTimeout);
 
-    smIn.regDur = parseInt(smIn.regDur) * 86400;
-    smIn.totalTime = parseInt(smIn.totalTime) * 86400;
+        smIn.regDur = parseInt(smIn.regDur);
+        smIn.totalTime = parseInt(smIn.totalTime);
+    } else {
+        smIn.polyCMTimeout = parseInt(smIn.polyCMTimeout) * 86400;
+        smIn.defaultTimeout = parseInt(smIn.defaultTimeout) * 86400;
+        smIn.neogationTimeout = parseInt(smIn.neogationTimeout) * 86400;
 
+        smIn.regDur = parseInt(smIn.regDur) * 86400;
+        smIn.totalTime = parseInt(smIn.totalTime) * 86400;
+    }
 }
 
 

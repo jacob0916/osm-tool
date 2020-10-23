@@ -37,27 +37,30 @@ function main() {
 
     console.log('Before job autoOpenGroup initialization');
     const job = new CronJob('0 0/1 * * * *', function() { // one minute
-        const d = new Date();
-        console.log('Every one Minute:', d);
         AutoOpenGroup(network, fgn, fgwt);
 
     });
     console.log('After job autoOpenGroup initialization');
     job.start();
-
-
 }
 
 function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
 
-
     console.log("network", network, "curGroupName", curGroupName, "curGrpWorktime", curGrpWorktime);
-
-    let newGrpName = osmTools.getNextGrpName(curGroupName,'_');
-    let newGrpWorktime = osmTools.getNextWorkTime(curGrpWorktime,7);
+    let newGrpName = '';
+    let newGrpWorktime = '';
+    let curGroupNameTemp = '';
+    if(curGroupName===''){
+        //curGroupNameTemp = 'internal_000';
+        curGroupNameTemp = 'jacob_000';
+    }else{
+        curGroupNameTemp = curGroupName;
+    }
+    newGrpName = osmTools.getNextGrpName(curGroupNameTemp,'_');
+    newGrpWorktime = osmTools.getNextWorkTime(curGrpWorktime,7200,true);
 
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log("***********************Begin opengroup %s**************************",newGrpName);
+    console.log("***********************Internal Begin opengroup %s**************************",newGrpName);
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log("\n\n\n");
 
@@ -71,14 +74,14 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
             '--network', network,
             '--gid', newGrpName,
             '--pgid', curGroupName,
-            '--pct', 1,
-            '--dt', 1,
-            '--nt', 1,
-            '--rd', 2,
+            '--pct', 1200,     //20minutes
+            '--dt', 1200,
+            '--nt', 1200,
+            '--rd', 1200,
             '--wt', newGrpWorktime,
-            '--tt', 7,
-            '--tn', 21,
-            '--th', 15,
+            '--tt', 7200,
+            '--tn', 4,
+            '--th', 3,
             '--srcid', '2153201998',
             '--dstid', '2147483708',
             '--scrv', 1,
@@ -86,7 +89,8 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
             '--md', '100e18',
             '--df', 1000,
             '--wlStart', 0,
-            '--wlCount', 11]);
+            '--wlCount', 5,
+            '--sec']);
 
         openGrp.stdout.on('data', (data) => {
             console.log(`stdout: ${data}`);
@@ -99,12 +103,15 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
         openGrp.on('close', (code) => {
             console.log(`Child Process exit，exit code ${code}`);
 
-            fgn = osmTools.getNextGrpName(fgn,'_');
-            fgwt = osmTools.getNextWorkTime(curGrpWorktime,7);
+            // fgn = osmTools.getNextGrpName(newGrpName,'_');
+            // fgwt = osmTools.getNextWorkTime(newGrpWorktime,7200,true);
+
+            fgn = newGrpName;
+            fgwt = newGrpWorktime;
 
             console.log("\n\n\n")
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            console.log("***********************End opengroup %s**************************",newGrpName);
+            console.log("***********************Internal End opengroup %s**************************",newGrpName);
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         });
     } else {

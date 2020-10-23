@@ -79,8 +79,11 @@ async function sendTx(senderAddr, contractAddr, msgValue, data) {
 
 async function getTxReceipt(txHash, name = '') {
     try {
-        let receipt = await web3.eth.getTransactionReceipt(txHash);
-        console.log("getTxReceipt %s(%s) receipt %s gas %s", name, txHash, receipt.status, receipt.gasUsed);
+        let receipt = null;
+        receipt = await web3.eth.getTransactionReceipt(txHash);
+        if(receipt){
+            console.log("getTxReceipt %s(%s) receipt %s gas %s", name, txHash, receipt.status, receipt.gasUsed);
+        }
         return receipt;
     } catch (err) {
         console.log("getTxReceipt %s(%s) none: %O", name, txHash, err);
@@ -205,4 +208,5 @@ module.exports = {
     sendTx,
     sendWan,
     buildSetPeriod,
+    getTxReceipt,
 };
