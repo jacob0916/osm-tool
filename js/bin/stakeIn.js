@@ -25,6 +25,7 @@ let argv = optimist
     .describe('smcnt', 'sm count')
     .describe('amount', 'stake in amount')
     .describe('network', 'network name')
+    .describe('grpPrex', 'prefix of the grp')        // Aries
     .default('smsi', 0)
     .default('smcnt', 30)
     .default('amount', 2000)
@@ -33,6 +34,8 @@ let argv = optimist
 
 console.log("=====================start====================");
 global.network = argv["network"];
+global.grpPrex = argv["grpPrex"];
+
 const config = require('../cfg/config');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 

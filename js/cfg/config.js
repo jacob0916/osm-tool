@@ -16,6 +16,8 @@ let config = {};
         console.log("use mainnet config");
         config = require('./config-mainnet');
     }
+
+    console.log("The white list template name  is :", global.grpPrex || "default");
 })();
 
 module.exports = config;

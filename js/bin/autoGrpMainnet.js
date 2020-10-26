@@ -9,12 +9,15 @@ let argv = optimist
     .describe('network', 'network name')
     .describe('fgn', 'first group name')              // such as : testnet_001  Aries_002
     .describe('fgwt', 'first group worktime')        // 2020/10/23-12:00:00
+    .describe('grpPrex', 'prefix of the grp')        // Aries
     .string('wt')
     .default('network', 'internal')
     .argv;
 global.network = argv["network"];
+global.grpPrex = argv["grpPrex"];
 
 let network = global.network;
+
 let fgn = argv["fgn"];
 let fgwt = argv["fgwt"];
 
@@ -69,6 +72,7 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
         // --srcid '2153201998'   --dstid '2147483708'   --scrv  1  --dcrv 1   --ms 10000e18 --md 100e18 --mp 10000e18 --df 1000   --wlStart 0  --wlCount  11
         const openGrp = spawn('node', ['openGrp.js',
             '--network', network,
+            '--grpPrex', global.grpPrex,
             '--gid', newGrpName,
             '--pgid', curGroupName,
             '--pct', 1,

@@ -12,12 +12,15 @@ let argv = optimist
     .describe('nc', 'Number count')
     .describe('wallet', 'Wallet address or working address')
     .describe('network', 'network')
+    .describe('grpPrex', 'prefix of the grp')        // Aries
     .default('nc', 1)
     .default('network', 'internal')
     .default('wallet', false)
     .boolean('wallet')
     .argv;
 global.network = argv["network"];
+global.grpPrex = argv["grpPrex"];
+
 const config = require('../cfg/config');
 
 const Web3 = require('web3');

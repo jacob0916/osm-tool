@@ -2,21 +2,24 @@ const Web3 = require('web3');
 const fs = require('fs');
 const path = require('path');
 
-const osmTools = require('./util/osmTools');
+const osmTools = require('../util/osmTools');
 
 const optimist = require('optimist');
 let argv = optimist
     .usage("Usage: $0  --network")
     .alias('h', 'help')
     .describe('network', 'network')
+    .describe('grpPrex', 'prefix of the grp')        // Aries
     .default('network', 'internal')
     .argv;
 
 global.network = argv["network"];
-const config = require('../cfg/config');
+global.grpPrex = argv["grpPrex"];
+
+const config = require('../../cfg/config');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
-const {sendWan} = require('./util/wanchain');
+const {sendWan} = require('../util/wanchain');
 
 
 async function main() {

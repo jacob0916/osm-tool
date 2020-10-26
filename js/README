@@ -9,16 +9,16 @@ cmd:
 
 step1:
     desc: build nodekey and enodeId
-    cmd: node crEnodeId.js --network testnet --nc 11
+    cmd: node enodeId.js --network testnet --nc 11
 
 
 step2:
     desc: build working addr and keystore
-    cmd:   node crWalletAddr.js --network testnet --nc 11
+    cmd:   node walletAddr.js --network testnet --nc 11
 
 step3:
     desc: build wallet addr and keystore
-    cmd:   node crWalletAddr.js --network testnet --nc 11 --wallet
+    cmd:   node walletAddr.js --network testnet --nc 11 --wallet
 
 step4:
         # wallet address  and keystore file name
@@ -50,6 +50,11 @@ step8:
      desc: stake out
      cmd:  node stakeOut.js --network testnet --gid 'Aries_001' --smsi 0 --smcnt 11
 
+
+
+step9:
+
+    node autoOpenGrp_internal.js  --network internal --fgn testnet_001 --fgwt '2020/10/22-10:05:00'
 
 Others command:
 

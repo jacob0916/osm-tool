@@ -7,6 +7,7 @@ const optimist = require('optimist');
 let argv = optimist
     .alias('h', 'help')
     .describe('network', 'network name')
+    .describe('grpPrex', 'prefix of the grp')        // Aries
     .describe('gid', 'grpId')
     .describe('pgid', 'preGrpId')
 
@@ -53,6 +54,7 @@ let argv = optimist
     .argv;
 global.network = argv["network"];
 global.sec = argv["sec"];
+global.grpPrex = argv["grpPrex"];
 
 const config = require('../cfg/config');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
@@ -195,7 +197,7 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
             let txHash = '';
 
 
-            txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+            //txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
 
             console.log("doOpenGrp txHash", txHash);
             resolve(txHash);
@@ -214,7 +216,7 @@ async function doSetPeriod(grpId, polyCommitTimeout, defaultTimeout, neogationTi
             console.log("data of buildSetPeriod", data);
             let txHash = '';
 
-            txHash = await sendTx(config.adminAddr, config.gpkScAddr, 0x0, data);
+            //txHash = await sendTx(config.adminAddr, config.gpkScAddr, 0x0, data);
 
             console.log("doSetPeriod txHash", txHash);
             resolve(txHash);

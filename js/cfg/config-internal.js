@@ -1,16 +1,31 @@
 const path = require('path');
 exports.wanNodeURL = 'http://192.168.1.179:7654';
 
-exports.gskList = path.join(__dirname,"../output-internal/gskList");
-exports.gpkKsDir = path.join(__dirname,"../output-internal/gpkKs");
+// exports.gskList = path.join(__dirname,"../output-internal/gskList");
+// exports.gpkKsDir = path.join(__dirname,"../output-internal/gpkKs");
+//
+//
+// exports.nodeKeyList = path.join(__dirname,"../output-internal/nodeKeyList");
+// exports.WalletAddList = path.join(__dirname,"../output-internal/WalletAddList");
+// exports.WorkingAddList = path.join(__dirname,"../output-internal/WorkingAddList");
+// exports.RelationList = path.join(__dirname,"../output-internal/RelationList");
+//
+// exports.ksDir = path.join(__dirname,"../output-internal/ks");
+
+let grpPrex = global.grpPrex || "default";
+grpPrex = grpPrex.toLowerCase();
+
+exports.gskList = path.join(__dirname,'../output-internal/',grpPrex,'/gskList');
+exports.gpkKsDir = path.join(__dirname,'../output-internal/',grpPrex,'/gpkKs');
 
 
-exports.nodeKeyList = path.join(__dirname,"../output-internal/nodeKeyList");
-exports.WalletAddList = path.join(__dirname,"../output-internal/WalletAddList");
-exports.WorkingAddList = path.join(__dirname,"../output-internal/WorkingAddList");
-exports.RelationList = path.join(__dirname,"../output-internal/RelationList");
+exports.nodeKeyList = path.join(__dirname,'../output-internal/',grpPrex,'/nodeKeyList');
+exports.WalletAddList = path.join(__dirname,'../output-internal/',grpPrex,'WalletAddList');
+exports.WorkingAddList = path.join(__dirname,'../output-internal/',grpPrex,'WorkingAddList');
+exports.RelationList = path.join(__dirname,'../output-internal/',grpPrex,'RelationList');
 
-exports.ksDir = path.join(__dirname,"../output-internal/ks");
+exports.ksDir = path.join(__dirname,'../output-internal/',grpPrex,'ks');
+
 
 exports.ownerAddr ='0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e';
 exports.adminAddr ='0x5793e629c061e7fd642ab6a1b4d552cec0e2d606';

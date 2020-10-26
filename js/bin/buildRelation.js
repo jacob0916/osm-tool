@@ -4,9 +4,12 @@ let argv = optimist
     .usage("Usage: $0  --nc [index] --wallet [true]")
     .alias('h', 'help')
     .describe('network', 'network')
+    .describe('grpPrex', 'prefix of the grp')        // Aries
     .default('network', 'internal')
     .argv;
 global.network = argv["network"];
+global.grpPrex = argv["grpPrex"];
+
 const config = require('../cfg/config');
 const osmTools = require('./util/osmTools');
 async function main() {

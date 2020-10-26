@@ -23,6 +23,7 @@ let argv = optimist
     .describe('smsi', 'sm start index')
     .describe('smcnt', 'sm count')
     .describe('network', 'network name')
+    .describe('grpPrex', 'prefix of the grp')        // Aries
     .default('smsi', 0)
     .default('smcnt', 30)
     .default('network', 'internal')
@@ -30,7 +31,9 @@ let argv = optimist
 
 console.log("=====================start====================");
 global.network = argv["network"];
-const config = require('../cfg/config');
+global.grpPrex = argv["grpPrex"];
+
+const config = require('../../cfg/config');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
 let {buildOpenGrpData, buildStakeOutData, getTxReceipt, sendTx} = require('./util/wanchain');

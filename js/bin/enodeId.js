@@ -6,10 +6,13 @@ let argv = optimist
     .alias('h', 'help')
     .describe('nc', 'Number count')
     .describe('network', 'network')
+    .describe('grpPrex', 'prefix of the grp')        // Aries
     .default('nc', 1)
     .default('network', 'internal')
     .argv;
 global.network = argv["network"];
+global.grpPrex = argv["grpPrex"];
+
 const config = require('../cfg/config');
 
 const osmTools = require('./util/osmTools');

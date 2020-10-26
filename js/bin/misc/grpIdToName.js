@@ -1,4 +1,4 @@
-const osmTools = require('./util/osmTools');
+const osmTools = require('../util/osmTools');
 
 const optimist = require('optimist');
 let argv = optimist

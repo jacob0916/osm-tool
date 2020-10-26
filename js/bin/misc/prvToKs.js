@@ -18,7 +18,9 @@ let argv = optimist
     .argv;
 
 global.network = argv["network"];
-const config = require('../cfg/config');
+global.grpPrex = argv["grpPrex"];
+
+const config = require('../../cfg/config');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
 async function createGPKKs(prv, ksFileName, gpkStr) {
