@@ -10,6 +10,12 @@ let argv = optimist
     .describe('fgn', 'first group name')              // such as : testnet_001  Aries_002
     .describe('fgwt', 'first group worktime')        // 2020/10/23-12:00:00
     .describe('grpPrex', 'prefix of the grp')        // Aries
+
+    .describe('pct', 'polyCommitTimeout uint:day')          //day
+    .describe('dt', 'defaultTimeout uint:day')              //day
+    .describe('nt', 'neogationTimeout uint:day')            //day
+    .describe('tt', 'totalTime uint:day')                    //day
+
     .string('wt')
     .default('network', 'internal')
     .argv;
@@ -19,6 +25,10 @@ global.grpPrex = argv["grpPrex"];
 let network = global.network;
 let fgn = argv["fgn"];
 let fgwt = argv["fgwt"];
+let pct = argv["pct"];
+let dt = argv["dt"];
+let nt = argv["nt"];
+let tt = argv["tt"];
 
 let pwd = '';
 
@@ -60,7 +70,7 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
     console.log("network", network, "curGroupName", curGroupName, "curGrpWorktime", curGrpWorktime);
 
     let newGrpName = osmTools.getNextGrpName(curGroupName,'_');
-    let newGrpWorktime = osmTools.getNextWorkTime(curGrpWorktime,7);
+    let newGrpWorktime = osmTools.getNextWorkTime(curGrpWorktime,parseInt(tt));
 
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log("***********************Begin opengroup %s**************************",newGrpName);
@@ -79,9 +89,9 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
             '--pwd', pwd,
             '--gid', newGrpName,
             '--pgid', curGroupName,
-            '--pct', 1,
-            '--dt', 1,
-            '--nt', 1,
+            '--pct', pct,
+            '--dt', dt,
+            '--nt', nt,
             '--rd', 2,
             '--wt', newGrpWorktime,
             '--tt', 7,
@@ -108,7 +118,7 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
             console.log(`Child Process exit，exit code ${code}`);
 
             fgn = osmTools.getNextGrpName(fgn,'_');
-            fgwt = osmTools.getNextWorkTime(curGrpWorktime,7);
+            fgwt = osmTools.getNextWorkTime(curGrpWorktime,tt);
 
             console.log("\n\n\n");
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");

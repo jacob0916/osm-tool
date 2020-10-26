@@ -242,6 +242,32 @@ function getPreWorkTime(curWorkTime, during,sec=false){
     return getStrByTimeStamp(curTS);
 }
 
+
+function getSMConf(){
+    //return [backupCount,standaloneWeight,delegationMulti]
+}
+
+
+function setSMConf(backupCount,standaloneWeight,delegationMulti){
+    //return [backupCount,standaloneWeight,delegationMulti]
+}
+
+function getChainTypeCo(){
+    // return  chainiTypeCo
+}
+
+function setChainTypeCo(srcChainId, desChainId,chainTypeCo){
+    // return  chainiTypeCo
+}
+
+function getGPKPeriod(){
+    //return [ployCommitPeriod,defaultPeriod,negotiatePeriod]
+}
+
+function setGPKPeriod(grpId,ployCommitPeriod, defaultPeriod,negotiatePeriod){
+    //
+}
+
 function getPwd(promptStr){
     return new Promise((resolve, reject) => {
         var read = require('read');
