@@ -20,6 +20,8 @@ let network = global.network;
 let fgn = argv["fgn"];
 let fgwt = argv["fgwt"];
 
+let pwd = '';
+
 function main_test() {
     console.log('Before job autoOpenGroup initialization');
     const job = new CronJob('0 0/1 * * * *', function () {
@@ -35,19 +37,21 @@ function main_test() {
 main();
 
 
-function main() {
+async function main() {
+    let firstPwd = await osmTools.getPwd("please Input pwd");
+    let secPwd = await osmTools.getPwd("please input pwd again");
 
+    if (firstPwd !== secPwd){
+        console.log("password is not same!");
+        process.exit(0);
+    }
+
+    pwd = firstPwd;
     console.log('Before job autoOpenGroup initialization');
     const job = new CronJob('0 0/1 * * * *', function() { // one minute
-        const d = new Date();
-        console.log('Every one Minute:', d);
         AutoOpenGroup(network, fgn, fgwt);
-
     });
-    console.log('After job autoOpenGroup initialization');
     job.start();
-
-
 }
 
 function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
@@ -72,6 +76,7 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
         const openGrp = spawn('node', ['openGrp.js',
             '--network', network,
             '--grpPrex', global.grpPrex,
+            '--pwd', pwd,
             '--gid', newGrpName,
             '--pgid', curGroupName,
             '--pct', 1,
@@ -105,7 +110,7 @@ function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
             fgn = osmTools.getNextGrpName(fgn,'_');
             fgwt = osmTools.getNextWorkTime(curGrpWorktime,7);
 
-            console.log("\n\n\n")
+            console.log("\n\n\n");
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             console.log("***********************End opengroup %s**************************",newGrpName);
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");

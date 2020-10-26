@@ -16,6 +16,7 @@
     "keythereum": "^1.0.4",
     "optimist": "^0.6.1",
     "promisefy-util": "^1.2.0",
+    "read": "^1.0.7",
     "wanchain-util": "^1.2.0",
     "web3": "^1.2.11"
   }

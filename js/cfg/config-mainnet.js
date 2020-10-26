@@ -1,16 +1,33 @@
 const path = require('path');
 exports.wanNodeURL = 'http://192.168.1.2:8545';
 
-exports.gskList = path.join(__dirname,"../output-mainnet/gskList");
-exports.gpkKsDir = path.join(__dirname,"../output-mainnet/gpkKs");
+// exports.gskList = path.join(__dirname,"../output-mainnet/gskList");
+// exports.gpkKsDir = path.join(__dirname,"../output-mainnet/gpkKs");
+//
+//
+// exports.nodeKeyList = path.join(__dirname,"../output-mainnet/nodeKeyList");
+// exports.WalletAddList = path.join(__dirname,"../output-mainnet/WalletAddList");
+// exports.WorkingAddList = path.join(__dirname,"../output-mainnet/WorkingAddList");
+// exports.RelationList = path.join(__dirname,"../output-mainnet/RelationList");
+//
+// exports.ksDir = path.join(__dirname,"../output-mainnet/ks");
 
 
-exports.nodeKeyList = path.join(__dirname,"../output-mainnet/nodeKeyList");
-exports.WalletAddList = path.join(__dirname,"../output-mainnet/WalletAddList");
-exports.WorkingAddList = path.join(__dirname,"../output-mainnet/WorkingAddList");
-exports.RelationList = path.join(__dirname,"../output-mainnet/RelationList");
+let grpPrex = global.grpPrex || "default";
+grpPrex = grpPrex.toLowerCase();
 
-exports.ksDir = path.join(__dirname,"../output-mainnet/ks");
+exports.gskList = path.join(__dirname,'../output-mainnet/',grpPrex,'/gskList');
+exports.gpkKsDir = path.join(__dirname,'../output-mainnet/',grpPrex,'/gpkKs');
+
+
+exports.nodeKeyList = path.join(__dirname,'../output-mainnet/',grpPrex,'/nodeKeyList');
+exports.WalletAddList = path.join(__dirname,'../output-mainnet/',grpPrex,'WalletAddList');
+exports.WorkingAddList = path.join(__dirname,'../output-mainnet/',grpPrex,'WorkingAddList');
+exports.RelationList = path.join(__dirname,'../output-mainnet/',grpPrex,'RelationList');
+
+exports.ksDir = path.join(__dirname,'../output-mainnet/',grpPrex,'ks');
+
+
 
 exports.ownerAddr ='0x9da26fc2e1d6ad9fdd46138906b0104ae68a65d8';
 exports.adminAddr ='0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e';

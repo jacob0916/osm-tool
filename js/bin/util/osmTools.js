@@ -242,6 +242,19 @@ function getPreWorkTime(curWorkTime, during,sec=false){
     return getStrByTimeStamp(curTS);
 }
 
+function getPwd(promptStr){
+    return new Promise((resolve, reject) => {
+        var read = require('read');
+        read({ prompt: promptStr, silent: true }, function(err, password) {
+            if(err != null){
+                reject(err);
+            }else{
+                resolve(password);
+            }
+        })
+    });
+}
+
 async function sleep(time) {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
@@ -266,4 +279,5 @@ module.exports = {
     getPreWorkTime,
     GroupStatus,
     sleep,
+    getPwd,
 }

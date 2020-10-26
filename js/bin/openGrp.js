@@ -8,6 +8,7 @@ let argv = optimist
     .alias('h', 'help')
     .describe('network', 'network name')
     .describe('grpPrex', 'prefix of the grp')        // Aries
+    .describe('pwd', 'password of admin\'s key store')        // Aries
     .describe('gid', 'grpId')
     .describe('pgid', 'preGrpId')
 
@@ -55,8 +56,14 @@ let argv = optimist
 global.network = argv["network"];
 global.sec = argv["sec"];
 global.grpPrex = argv["grpPrex"];
+global.pwd = argv["pwd"];
 
 const config = require('../cfg/config');
+
+config.password = global.pwd || config.password;
+
+//console.log("openGrp.js config.password is %s\n",config.password);
+
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
 
 let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx, buildSetPeriod} = require('./util/wanchain');
@@ -96,7 +103,7 @@ async function main() {
 
     // waddr, wkaddr, wkpk, enodeId
 
-
+    console.log("config.RelationList is :",config.RelationList);
     let linesRelation = await osmTools.processLineByLine(config.RelationList);
     let wlWallectAddr = [];
     let wlWkAddr = [];
@@ -196,8 +203,9 @@ async function doOpenGrp(smIn, wlWkAddr, wlWalletAddr) {
             console.log("data of doOpenGrp", data);
             let txHash = '';
 
-
-            //txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+            if(!config.dryRun){
+                txHash = await sendTx(config.adminAddr, config.smgScAddr, 0x0, data);
+            }
 
             console.log("doOpenGrp txHash", txHash);
             resolve(txHash);
@@ -216,7 +224,9 @@ async function doSetPeriod(grpId, polyCommitTimeout, defaultTimeout, neogationTi
             console.log("data of buildSetPeriod", data);
             let txHash = '';
 
-            //txHash = await sendTx(config.adminAddr, config.gpkScAddr, 0x0, data);
+            if(!config.dryRun){
+                txHash = await sendTx(config.adminAddr, config.gpkScAddr, 0x0, data);
+            }
 
             console.log("doSetPeriod txHash", txHash);
             resolve(txHash);

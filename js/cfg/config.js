@@ -18,6 +18,10 @@ let config = {};
     }
 
     console.log("The white list template name  is :", global.grpPrex || "default");
+
+    config.dryRun = true;
+    console.log("@@@@@@The flag of dryRun is %s@@@@@\n", config.dryRun);
+
 })();
 
 module.exports = config;
