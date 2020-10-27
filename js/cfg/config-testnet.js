@@ -45,7 +45,7 @@ exports.gasPriceTransfer = 1e9;
 exports.gasLimitTransfer = 21000;
 //exports.gasLimitTransfer = 4700000;
 
-exports.gatherKsList = path.join(__dirname,"../bin/gatherList");
+exports.gatherKsList = path.join(__dirname,"../bin/misc/gatherList");
 
 exports.smgScAddr = '0xaA5A0f7F99FA841F410aafD97E8C435c75c22821';
 

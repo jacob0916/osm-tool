@@ -35,7 +35,7 @@ async function doGather() {
 
     for (let i = 0; i < linesRelation.length; i++) {
         console.log(linesRelation[i]);
-        let tokens = osmTools.split(linesRelation[i]);
+        let tokens = osmTools.split(linesRelation[i],'\/');
         let addr = tokens[tokens.length - 1];
         let fullKsPath = path.join(__dirname, linesRelation[i]);
         console.log(fullKsPath);
