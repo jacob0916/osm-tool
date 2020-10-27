@@ -14,7 +14,7 @@ let argv = optimist
     .describe('pct', 'polyCommitTimeout uint:day')          //day
     .describe('dt', 'defaultTimeout uint:day')              //day
     .describe('nt', 'neogationTimeout uint:day')            //day
-    .describe('tt', 'totalTime uint:day')                    //day
+    .describe('tt', 'totalTime uint:day')                   //day
 
     .string('wt')
     .default('network', 'internal')
@@ -58,7 +58,11 @@ async function main() {
 
     pwd = firstPwd;
     console.log('Before job autoOpenGroup initialization');
+    //  00 58 10 * * 2  // 每周二北京时间10:58:00
     const job = new CronJob('0 0/1 * * * *', function() { // one minute
+    //const job = new CronJob('00 52 10 * * 2', function() {
+
+        //const job = new CronJob('0 37 19 ? ? 2 *', function() { // one minute
         AutoOpenGroup(network, fgn, fgwt);
     });
     job.start();

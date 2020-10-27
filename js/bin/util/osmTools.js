@@ -6,6 +6,9 @@ const ecurve = require('ecurve');
 const ecparams = ecurve.getCurveByName('secp256k1');
 const BigInteger = require('bigi');
 
+// const Web3 = require('web3');
+// const config = require('../../cfg/config');
+
 function stringTobytes32(name) {
     let b = Buffer.alloc(32)
     b.write(name, 32 - name.length, 'utf8')
@@ -243,30 +246,8 @@ function getPreWorkTime(curWorkTime, during,sec=false){
 }
 
 
-function getSMConf(){
-    //return [backupCount,standaloneWeight,delegationMulti]
-}
 
 
-function setSMConf(backupCount,standaloneWeight,delegationMulti){
-    //return [backupCount,standaloneWeight,delegationMulti]
-}
-
-function getChainTypeCo(){
-    // return  chainiTypeCo
-}
-
-function setChainTypeCo(srcChainId, desChainId,chainTypeCo){
-    // return  chainiTypeCo
-}
-
-function getGPKPeriod(){
-    //return [ployCommitPeriod,defaultPeriod,negotiatePeriod]
-}
-
-function setGPKPeriod(grpId,ployCommitPeriod, defaultPeriod,negotiatePeriod){
-    //
-}
 
 function getPwd(promptStr){
     return new Promise((resolve, reject) => {

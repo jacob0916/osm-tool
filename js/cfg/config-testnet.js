@@ -43,6 +43,7 @@ exports.gasLimit = 10000000;
 
 exports.gasPriceTransfer = 1e9;
 exports.gasLimitTransfer = 21000;
+//exports.gasLimitTransfer = 4700000;
 
 exports.gatherKsList = path.join(__dirname,"../bin/gatherList");
 

@@ -200,6 +200,74 @@ function buildSetPeriod(grpId, ployCommitTimeout, defaultTimeout, neogationTimeo
     return c.methods.setPeriod(grpId, ployCommitTimeout, defaultTimeout, neogationTimeout).encodeABI();
 }
 
+// async function GetGrpStatus(grpId){
+//     return new Promise((resolve, reject) => {
+//         try{
+//             let c = getContract(config.smgAbi, config.smgScAddr);
+//             let ret = await c.methods.getStoremanGroupInfo(grpId).call();
+//             resolve(ret.status);
+//         }catch(err){
+//             reject(err);
+//         }
+//     });
+// }
+//
+// async function getSMConf(){
+//     //return [backupCount,standaloneWeight,delegationMulti]
+//
+//     return new Promise((resolve, reject) => {
+//         try{
+//             let c = getContract(config.smgAbi, config.smgScAddr);
+//             let ret = await c.methods.getStoremanConf().call();
+//             resolve(ret);
+//         }catch(err){
+//             reject(err);
+//         }
+//     });
+// }
+//
+//
+// function setSMConf(backupCount,standaloneWeight,delegationMulti){
+//     //return [backupCount,standaloneWeight,delegationMulti]
+// }
+//
+// async function getChainTypeCo(srcChainId, desChainId){
+//     // return  chainiTypeCo
+//
+//     return new Promise((resolve, reject) => {
+//         try{
+//             let c = getContract(config.smgAbi, config.smgScAddr);
+//             let ret = await c.methods.getChainTypeCo(srcChainId,desChainId).call();
+//             resolve(ret);
+//         }catch(err){
+//             reject(err);
+//         }
+//     });
+//
+// }
+//
+// function setChainTypeCo(srcChainId, desChainId,chainTypeCo){
+//     // return  chainiTypeCo
+// }
+//
+// //todo gpkPeriod......
+// function getGPKPeriod(){
+//     //return [ployCommitPeriod,defaultPeriod,negotiatePeriod]
+//     return new Promise((resolve, reject) => {
+//         try{
+//             let c = getContract(config.gpkAbi, config.gpkScAddr);
+//             let ret = await c.methods.getChainTypeCo(srcChainId,desChainId).call();
+//             resolve(ret);
+//         }catch(err){
+//             reject(err);
+//         }
+//     });
+// }
+//
+// function setGPKPeriod(grpId,ployCommitPeriod, defaultPeriod,negotiatePeriod){
+//     //
+// }
+
 module.exports = {
     buildOpenGrpData,
     buildStakeInData,
