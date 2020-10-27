@@ -81,3 +81,8 @@ Others command:
 
             # gather the wan to owner address.
             2. node gather.js --network testnet
+
+########################
+mainnnet
+========================
+node autoGrpMainnet.js  --network mainnet --grpPrex Jacob --fgn '' --fgwt '2020/10/23-12:00:00' --pct 1 --dt 1 --nt 1 --tt 7

@@ -96,6 +96,9 @@ async function InitFirstGroup() {
 
 function CreateEnodeId() {
     return new Promise((resolve, reject) => {
+
+        console.log("Entering CreateEnodeId.......");
+
         const crNodeId = spawn('node', ['enodeId.js',
             '--network', network,
             '--grpPrex', global.grpPrex,
@@ -123,6 +126,9 @@ function CreateEnodeId() {
 
 function CreateWorkAddr() {
     return new Promise((resolve, reject) => {
+
+        console.log("Entering CreateWorkAddr.......");
+
         const crWkAddr = spawn('node', ['walletAddr.js',
             '--network', network,
             '--grpPrex', global.grpPrex,
@@ -151,6 +157,9 @@ function CreateWorkAddr() {
 
 function CreateWalletAddr() {
     return new Promise((resolve, reject) => {
+
+        console.log("Entering CreateWalletAddr.......");
+
         const crWalletAddr = spawn('node', ['walletAddr.js',
             '--network', network,
             '--grpPrex', global.grpPrex,
@@ -178,6 +187,9 @@ function CreateWalletAddr() {
 
 function BuildRelation() {
     return new Promise((resolve, reject) => {
+
+        console.log("Entering BuildRelation.......");
+
         const buildRelation = spawn('node', ['buildRelation.js',
             '--network', network,
             '--grpPrex', global.grpPrex]);
@@ -203,7 +215,7 @@ function BuildRelation() {
 
 function BuildConf() {
     return new Promise((resolve, reject) => {
-
+        console.log("Entering BuildConf.......");
         console.log("Build conf : defaultDir:%s rootdir:%s",config.defaultDir,config.rootDir);
 
         const buildRelation = spawn('cp', ['-rf',config.defaultDir,config.rootDir]);
@@ -229,7 +241,7 @@ function BuildConf() {
 function cpAdminKs() {
     return new Promise((resolve, reject) => {
 
-
+        console.log("Entering cpAdminKs.......");
 
         var process = require('child_process');
         console.log("Build conf : globalAdminKsDir:%s ksDir:%s",config.globalAdminKsDir,config.ksDir);
