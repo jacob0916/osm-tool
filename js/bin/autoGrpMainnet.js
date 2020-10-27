@@ -38,7 +38,7 @@ main();
 
 function main() {
 
-    console.log('Before job autoOpenGroup initialization');
+    r
     const job = new CronJob('0 0/1 * * * *', function() { // one minute
         const d = new Date();
         console.log('Every one Minute:', d);

@@ -9,16 +9,16 @@ cmd:
 
 step1:
     desc: build nodekey and enodeId
-    cmd: node enodeId.js --network testnet --nc 11
+    cmd: node enodeId.js --network testnet --grpPrex  testnet --nc 11
 
 
 step2:
     desc: build working addr and keystore
-    cmd:   node walletAddr.js --network testnet --nc 11
+    cmd:   node walletAddr.js --network testnet --grpPrex  testnet --nc 11
 
 step3:
     desc: build wallet addr and keystore
-    cmd:   node walletAddr.js --network testnet --nc 11 --wallet
+    cmd:   node walletAddr.js --network testnet --nc 11 --wallet --grpPrex  testnet
 
 step4:
         # wallet address  and keystore file name
@@ -26,11 +26,11 @@ step4:
         # working pk
         # enodeId
     desc: build relation of storeman info.
-    cmd:   node buildRelation.js --network testnet
+    cmd:   node buildRelation.js --network testnet --grpPrex  testnet
 
 step5:
      desc: alloc wan to storeman working address and wallet address.
-     cmd:  node alloc.js --network testnet
+     cmd:  node alloc.js --network testnet --grpPrex  testnet
 
 
 step6:
@@ -44,7 +44,9 @@ step6:
 
 step7:
      desc: stake in
-     cmd:  node stakeIn.js --network testnet --gid 'Aries_002' --smsi 0 --smcnt 11 --amount 1.1e22
+     cmd:
+
+     node stakeIn.js --network testnet --grpPrex testnet  --gid 'testnet_007' --smsi 1 --smcnt 10 --amount 1.1e22
 
 step8:
      desc: stake out
@@ -54,7 +56,8 @@ step8:
 
 step9:
 
-    node autoOpenGrp_internal.js  --network internal --fgn testnet_001 --fgwt '2020/10/22-10:05:00'
+    node autoGrpTestnet.js  --network testnet --grpPrex Aries --fgn Aries_002 --fgwt '2020/10/24-12:00:00' --pct 2 --dt 1 --nt 1 --tt 7
+    node autoGrpTestnet.js  --network testnet --grpPrex testnet --fgn testnet_006 --fgwt '2020/10/23-12:00:00' --pct 1 --dt 1 --nt 1 --tt 7
 
 Others command:
 

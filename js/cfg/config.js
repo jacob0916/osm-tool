@@ -19,7 +19,9 @@ let config = {};
 
     console.log("The white list template name  is :", global.grpPrex || "default");
 
-    config.dryRun = false;
+    config.dryRun = true;       // only for test
+    //config.dryRun = false;      // for product
+
     console.log("@@@@@@The flag of dryRun is %s@@@@@\n", config.dryRun);
 
 })();
