@@ -36,7 +36,9 @@ let th = 15;        // threshold nodes
 let df = 1000;     // delegate fee
 
 let wlStart = 0;  // white list start index
-let wlCount = 11; //
+let wlCount = 11; // white list count(including working white list)
+
+let backupCount = 10;
 
 let srcid = '2153201998';
 let dstid = '2147483708';
@@ -85,6 +87,8 @@ async function InitFirstGroup() {
             await CreateWalletAddr();
             await BuildRelation();
             await cpAdminKs();
+
+            await BackupCount();
             resolve(true);
         }catch(err){
             console.error("InitFirstGroup error : %s",err);
@@ -123,6 +127,37 @@ function CreateEnodeId() {
     });
 
 }
+
+
+function BackupCount() {
+    return new Promise((resolve, reject) => {
+
+        console.log("Entering backupCount.......");
+
+        const crNodeId = spawn('node', ['backup.js',
+            '--network', network,
+            '--nc', backupCount]);
+
+        crNodeId.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+        });
+
+        crNodeId.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        crNodeId.on('close', (code) => {
+            console.log(`Child Process [backupCount] exit，exit code ${code}`);
+            if(parseInt(code)){
+                reject(code);
+            }else{
+                resolve(code);
+            }
+        });
+    });
+
+}
+
 
 function CreateWorkAddr() {
     return new Promise((resolve, reject) => {

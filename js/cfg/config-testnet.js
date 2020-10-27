@@ -29,6 +29,13 @@ exports.RelationList = path.join(__dirname,'../output-testnet/',grpPrex,'Relatio
 exports.ksDir = path.join(__dirname,'../output-testnet/',grpPrex,'ks');
 
 
+exports.rootDir = path.join(__dirname,'../output-testnet/',grpPrex);
+exports.defaultDir = path.join(__dirname,'../output-testnet/testnet');
+
+
+exports.globalAdminKsDir = path.join(__dirname,'../output/ks_admin');
+exports.globalAdminKsFiles = path.join(__dirname,'../output/ks_admin/*');
+
 
 
 exports.ownerAddr ='0x9da26fc2e1d6ad9fdd46138906b0104ae68a65d8';

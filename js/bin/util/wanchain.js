@@ -259,4 +259,6 @@ module.exports = {
     buildSetPeriod,
     getTxReceipt,
     getGrpStatus,
+    getSMConf,
+    buildSmConf,
 };

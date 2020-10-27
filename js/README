@@ -1,10 +1,9 @@
-##  step0:
+step0:
 
-#   desc: unlock owner & admin:
-#   cmd:
-#            >personal.unlockAccount('0x9da26fc2e1d6ad9fdd46138906b0104ae68a65d8','wanglu',9999)
-#
-#            > personal.unlockAccount('0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e','wanglu',9999)
+    desc: update backup count
+    cmd:
+    node backup.js --network testnet --nc 10
+
 
 step1:
     desc: build nodekey and enodeId
