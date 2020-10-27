@@ -199,7 +199,9 @@ function PrefixInteger(num, length) {
 
 // testnet_001
 function getNextGrpName(curGrpName,seperator='_'){
+    console.log("getNextGrpName: curGrpName %s",curGrpName);
     let [prefix, number] = curGrpName.toString().split(seperator);
+    console.log("prefix: %s, number:%s",prefix,number);
     let nextNumber = parseInt(number) + 1;
 
     let ret = '';

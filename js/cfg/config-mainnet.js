@@ -1,5 +1,6 @@
 const path = require('path');
-exports.wanNodeURL = 'https://gwan-ssl.wandevs.org:56891';
+//exports.wanNodeURL = 'https://gwan-ssl.wandevs.org:56891';
+exports.wanNodeURL = 'http://192.168.1.2:9545';
 
 // exports.gskList = path.join(__dirname,"../output-mainnet/gskList");
 // exports.gpkKsDir = path.join(__dirname,"../output-mainnet/gpkKs");
@@ -26,6 +27,14 @@ exports.WorkingAddList = path.join(__dirname,'../output-mainnet/',grpPrex,'Worki
 exports.RelationList = path.join(__dirname,'../output-mainnet/',grpPrex,'RelationList');
 
 exports.ksDir = path.join(__dirname,'../output-mainnet/',grpPrex,'ks');
+
+
+exports.rootDir = path.join(__dirname,'../output-mainnet/',grpPrex);
+exports.defaultDir = path.join(__dirname,'../output-mainnet/mainnet');
+
+
+exports.globalAdminKsDir = path.join(__dirname,'../output/ks_admin');
+exports.globalAdminKsFiles = path.join(__dirname,'../output/ks_admin/*');
 
 
 
