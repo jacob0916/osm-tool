@@ -1,24 +1,29 @@
-step0:
+##  step0:
 
-desc: unlock owner & admin:
-cmd:
-            >personal.unlockAccount('0x9da26fc2e1d6ad9fdd46138906b0104ae68a65d8','wanglu',9999)
-
-            > personal.unlockAccount('0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e','wanglu',9999)
-
+#   desc: unlock owner & admin:
+#   cmd:
+#            >personal.unlockAccount('0x9da26fc2e1d6ad9fdd46138906b0104ae68a65d8','wanglu',9999)
+#
+#            > personal.unlockAccount('0x2d0e7c0813a51d3bd1d08246af2a8a7a57d8922e','wanglu',9999)
 
 step1:
     desc: build nodekey and enodeId
-    cmd: node enodeId.js --network testnet --grpPrex  testnet --nc 11
+    cmd:
+
+    node enodeId.js --network testnet --grpPrex  testnet --nc 11
 
 
 step2:
     desc: build working addr and keystore
-    cmd:   node walletAddr.js --network testnet --grpPrex  testnet --nc 11
+    cmd:
+
+    node walletAddr.js --network testnet --grpPrex  testnet --nc 11
 
 step3:
     desc: build wallet addr and keystore
-    cmd:   node walletAddr.js --network testnet --nc 11 --wallet --grpPrex  testnet
+    cmd:
+
+    node walletAddr.js --network testnet --nc 11 --wallet --grpPrex  testnet
 
 step4:
         # wallet address  and keystore file name
@@ -26,11 +31,15 @@ step4:
         # working pk
         # enodeId
     desc: build relation of storeman info.
-    cmd:   node buildRelation.js --network testnet --grpPrex  testnet
+    cmd:
+
+    node buildRelation.js --network testnet --grpPrex  testnet
 
 step5:
      desc: alloc wan to storeman working address and wallet address.
-     cmd:  node alloc.js --network testnet --grpPrex  testnet
+     cmd:
+
+     node alloc.js --network testnet --grpPrex  testnet
 
 
 step6:
@@ -48,11 +57,16 @@ step7:
 
      node stakeIn.js --network testnet --grpPrex testnet  --gid 'testnet_007' --smsi 1 --smcnt 10 --amount 1.1e22
 
+
+
+
+=======================================================================================================================
+//
 step8:
      desc: stake out
      cmd:  node stakeOut.js --network testnet --gid 'Aries_001' --smsi 0 --smcnt 11
 
-
+// auto open group
 
 step9:
 
