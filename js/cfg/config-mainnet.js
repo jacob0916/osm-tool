@@ -48,7 +48,7 @@ exports.allocWKValue = 1;
 exports.gasPrice = 180000000000;
 exports.gasLimit = 10000000;
 
-exports.smgScAddr = '0x723b4524F28Cf3d4b9bfc359a1f9D67E4C7eb99C';
+exports.smgScAddr = '0x41cB88BC2840266f3E2e6af074b1109F673d3dFc';
 
 exports.gatherKsList = path.join(__dirname,"../bin/misc/gatherList");
 
