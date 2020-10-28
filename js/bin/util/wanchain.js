@@ -213,6 +213,7 @@ function getGrpStatus(grpId){
 }
 
 async function getSMConf(){
+    console.log("smgScAddr is %s",config.smgScAddr);
     //return [backupCount,standaloneWeight,delegationMulti]
     return new Promise(async(resolve, reject) => {
         try{

@@ -18,11 +18,33 @@ const osmTools = require('./util/osmTools');
 
 const Web3 = require('web3');
 let web3 = new Web3(new Web3.providers.HttpProvider(config.wanNodeURL));
+let pwd = '';
 let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx, buildSetPeriod,buildSmConf,getSMConf} = require('./util/wanchain');
+
+// true or false
+
 async function main() {
+    let firstPwd = await osmTools.getPwd("please input pwd of contract admin");
+    let secPwd = await osmTools.getPwd("please input pwd again");
+
+    if (firstPwd !== secPwd) {
+        console.log("password is not same!");
+        process.exit(0);
+    }
+
+    pwd = firstPwd;
+    if(!osmTools.checkPwd(config.adminAddr,pwd,config.ksDir)){
+        console.log("wrong password!");
+        process.exit(0);
+    }else{
+        console.log("password is OK!");
+    }
+
        try{
            let ret = await getSMConf();
            console.log("Entering backup.js main.....");
+           console.log("Old backup count %s  standaloneWeight %s, delegationMulti %s",ret['backupCount'],ret['standaloneWeight'],ret['delegationMulti']);
+
            let hexnc = Web3.utils.toHex(nc);
            //let data = await buildSmConf(nc,ret['standaloneWeight'],ret['delegationMulti']);
            let data = await buildSmConf(hexnc,ret['standaloneWeight'],ret['delegationMulti']);

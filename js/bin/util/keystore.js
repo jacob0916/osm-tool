@@ -35,6 +35,29 @@ const keyStore = {
         return privKeyA;
     },
 
+    checkPwd(address, password, keyStorePath){
+        let filePath;
+        if (address.substr(0, 2) === '0x' || address.substr(0, 2) === '0X')
+            address = address.substr(2);
+        console.log("keystorePath is %s",keyStorePath);
+        let files = fs.readdirSync(keyStorePath);
+        for (var i in files) {
+            var item = files[i];
+            if (item.toLowerCase().indexOf(address.toLowerCase()) >= 0) {
+                filePath = path.join(keyStorePath, item);
+            }
+        }
+        let keystore = this.getFromFile(filePath);
+        let keyAObj = {version: keystore.version, crypto: keystore.crypto};
+        let privKeyA;
+        try {
+            privKeyA = keythereum.recover(password, keyAObj);
+        } catch (error) {
+            console.log('wrong password');
+            return false;
+        }
+        return true;
+    },
     getPrivateKeyByKsFile(address, password, filePath) {
 
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>keystore filepath:" + filePath);

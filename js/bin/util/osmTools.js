@@ -9,6 +9,8 @@ const BigInteger = require('bigi');
 // const Web3 = require('web3');
 // const config = require('../../cfg/config');
 
+const KeyStore = require('./keystore');
+
 function stringTobytes32(name) {
     let b = Buffer.alloc(32)
     b.write(name, 32 - name.length, 'utf8')
@@ -264,6 +266,10 @@ function getPwd(promptStr){
     });
 }
 
+function checkPwd(addr, pwd, ksDir){
+    return KeyStore.checkPwd(addr,pwd,ksDir)
+}
+
 async function sleep(time) {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
@@ -289,4 +295,5 @@ module.exports = {
     GroupStatus,
     sleep,
     getPwd,
+    checkPwd,
 }
