@@ -47,6 +47,7 @@ let dcrv = 1;          // des curve
 
 let ms = '10000e18';  // wei
 let md = '100e18';    // wei
+let mp = '10000e18';  // wei
 
 
 let pwd = '';
@@ -375,6 +376,7 @@ async function AutoOpenGroup(network, curGroupName, curGrpWorktime) {
             '--dcrv', dcrv,
             '--ms', ms,
             '--md', md,
+            '--mp', mp,
             '--df', df,
             '--wlStart', wlStart,
             '--wlCount', wlCount]);
