@@ -1,3 +1,6 @@
+########################
+open mannually
+========================
 step0:
 
     desc: update backup count
@@ -72,6 +75,17 @@ step9:
     node autoGrpTestnet.js  --network testnet --grpPrex Aries --fgn Aries_002 --fgwt '2020/10/24-12:00:00' --pct 2 --dt 1 --nt 1 --tt 7
     node autoGrpTestnet.js  --network testnet --grpPrex testnet --fgn testnet_006 --fgwt '2020/10/23-12:00:00' --pct 1 --dt 1 --nt 1 --tt 7
 
+
+
+########################
+open automatically
+========================
+node autoGrpMainnet.js  --network mainnet --grpPrex Jacob --fgn '' --fgwt '2020/10/23-12:00:00' --pct 1 --dt 1 --nt 1 --tt 7
+
+
+########################
+other command
+========================
 Others command:
 
         gather wan:
@@ -80,8 +94,3 @@ Others command:
 
             # gather the wan to owner address.
             2. node gather.js --network testnet
-
-########################
-mainnnet
-========================
-node autoGrpMainnet.js  --network mainnet --grpPrex Jacob --fgn '' --fgwt '2020/10/23-12:00:00' --pct 1 --dt 1 --nt 1 --tt 7
