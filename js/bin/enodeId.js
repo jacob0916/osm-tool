@@ -36,11 +36,6 @@ function main() {
         let pk = osmTools.bufferToHexString(pkb);
         let pk1 = osmTools.bufferToHexString(pkb1);
         console.log(prv, pk, pk1);
-
-        // let keystore = web3.eth.accounts.encrypt(prv,config.password);
-        // keystore.waddress = wanutil.generateWaddrFromPriv(prvb,prvb).slice(2);
-        // keystore.crypto2 = keystore.crypto;
-        // fs.writeFileSync(path.join(config.ksDir,'0x'+keystore.address), JSON.stringify(keystore));
         // nodekey enodeId
         let oneLine = osmTools.removePrefix(prv).toLowerCase() + "\t" + pk.toLowerCase();
         if (i != parseInt(nc - 1)) {

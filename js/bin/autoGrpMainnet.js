@@ -59,7 +59,8 @@ let {getGrpStatus} = require('./util/wanchain');
 main();
 
 async function main() {
-    let firstPwd = await osmTools.getPwd("please Input pwd");
+
+    let firstPwd = await osmTools.getPwd("please input pwd of contract admin");
     let secPwd = await osmTools.getPwd("please input pwd again");
 
     if (firstPwd !== secPwd) {
@@ -68,6 +69,14 @@ async function main() {
     }
 
     pwd = firstPwd;
+    if (!osmTools.checkPwd(config.adminAddr, pwd, config.ksDir)) {
+        console.log("wrong password!");
+        process.exit(0);
+    } else {
+        console.log("password is OK!");
+    }
+    config.password = pwd;
+
     console.log('Before job autoOpenGroup initialization');
     const job = new CronJob('0 0/1 * * * *', function () { // one minute
         //const job = new CronJob('00 52 10 * * 2', function() { // Tuesday 10:52:00
