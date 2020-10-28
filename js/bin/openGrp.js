@@ -60,6 +60,7 @@ global.pwd = argv["pwd"];
 
 const config = require('../cfg/config');
 
+let pwd = '';
 config.password = global.pwd || config.password;
 
 //console.log("openGrp.js config.password is %s\n",config.password);
@@ -72,13 +73,6 @@ let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx, buildSetPeriod} =
 async function main() {
 
     let firstPwd = await osmTools.getPwd("please input pwd of contract admin");
-    let secPwd = await osmTools.getPwd("please input pwd again");
-
-    if (firstPwd !== secPwd) {
-        console.log("password is not same!");
-        process.exit(0);
-    }
-
     pwd = firstPwd;
     if (!osmTools.checkPwd(config.adminAddr, pwd, config.ksDir)) {
         console.log("wrong password!");

@@ -25,13 +25,6 @@ let {buildOpenGrpData, buildStakeInData, getTxReceipt, sendTx, buildSetPeriod, b
 
 async function main() {
     let firstPwd = await osmTools.getPwd("please input pwd of contract admin");
-    let secPwd = await osmTools.getPwd("please input pwd again");
-
-    if (firstPwd !== secPwd) {
-        console.log("password is not same!");
-        process.exit(0);
-    }
-
     pwd = firstPwd;
     if (!osmTools.checkPwd(config.adminAddr, pwd, config.ksDir)) {
         console.log("wrong password!");
