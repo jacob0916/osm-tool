@@ -49,7 +49,7 @@ function main() {
         fileContent += oneLine;
     }
 
-    fs.writeFileSync(config.nodeKeyList, fileContent);
+    fs.writeFileSync(config.nodeKeyList, fileContent,{flag:'a+'});
     console.log("===============done=================\n");
 }
 
